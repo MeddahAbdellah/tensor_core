@@ -1,2 +1,4 @@
 *.ps1
 transcript
+*.mpf
+work/*
