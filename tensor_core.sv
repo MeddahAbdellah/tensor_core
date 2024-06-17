@@ -11,6 +11,8 @@ module tensor_core (
     logic [31:0] C [15:0];
     logic [7:0] bit_cnt;
     logic [4:0] index;
+    logic [7:0] bit_cnt_out;
+    logic [4:0] index_out;
     logic [31:0] temp_out;
     logic serial_out_en;
 
@@ -38,17 +40,17 @@ module tensor_core (
 
     always_ff @(posedge clk) begin
         if (serial_out_en) begin
-            if (bit_cnt < 32) begin
-                serial_out <= C[index][bit_cnt];
-                bit_cnt <= bit_cnt + 1;
+            if (bit_cnt_out < 32) begin
+                serial_out <= C[index_out][bit_cnt_out];
+                bit_cnt_out <= bit_cnt_out + 1;
             end else begin
-                bit_cnt <= 0;
-                index <= index + 1;
+                bit_cnt_out <= 0;
+                index_out <= index_out + 1;
             end
         end
     end
 
-    assign done = (index == 16);
+    assign done = (index_out == 32);
 
     matrix4x4mult matrix4x4mult_instance (
         .A(A),
