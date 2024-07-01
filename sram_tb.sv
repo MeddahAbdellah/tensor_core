@@ -20,7 +20,7 @@ module sram_tb();
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("vocab.bin")
+        .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin")
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
