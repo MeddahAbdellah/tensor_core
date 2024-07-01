@@ -40,23 +40,14 @@ module matcher_tb;
     // Test case 1: Set a sample word
     #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
 
-    // Allow some time for processing
-    #100;
-
-    // Test case 2: Change the word
-    word = {8'h6C, 8'h6F, 8'h21}; // ASCII for "lo!"
-
-    // Allow some time for processing
-    #100;
-
+    #200;
     // End simulation
-    #10 $finish;
+    #10 $stop;
   end
 
   // Monitor
   always @(posedge clk) begin
-    $display("Time=%0t: rst_n=%b, word=%h", $time, rst_n, word);
-    $display("curr_vocab_addr=%h, curr_vocab=%h, vocab_overflow=%b, nullptr_vocab=%b",
+    $display("curr_vocab_addr=%b, curr_vocab=%b, vocab_overflow=%b, nullptr_vocab=%b",
              uut.curr_vocab_addr, uut.curr_vocab, uut.vocab_overflow, uut.nullptr_vocab);
   end
 

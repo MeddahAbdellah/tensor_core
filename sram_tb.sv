@@ -20,7 +20,7 @@ module sram_tb();
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin")
+        .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin") 
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
@@ -54,7 +54,7 @@ module sram_tb();
             we = 0;
             addr = i;
             @(posedge clk);
-            $display("Address %0d: %h", i, dout);
+            $display("Address %0d: %b", i, dout);
         end
 
         $display("Writing");
@@ -77,12 +77,12 @@ module sram_tb();
             we = 0;
             addr = i;
             @(posedge clk);
-            $display("Address %0d: %h", i, dout);
+            $display("Address %0d: %b", i, dout);
         end
 
         // Test complete
         $display("Test complete");
-        $finish;
+        $stop;
     end
 
 endmodule

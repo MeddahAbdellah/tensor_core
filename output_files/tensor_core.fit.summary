@@ -1,0 +1,16 @@
+Fitter Status : Successful - Mon Jun 17 19:38:17 2024
+Quartus Prime Version : 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+Revision Name : tensor_core
+Top-level Entity Name : tensor_core
+Family : Cyclone IV E
+Device : EP4CE55F23C6
+Timing Models : Final
+Total logic elements : 33,599 / 55,856 ( 60 % )
+    Total combinational functions : 33,302 / 55,856 ( 60 % )
+    Dedicated logic registers : 539 / 55,856 ( < 1 % )
+Total registers : 539
+Total pins : 6 / 325 ( 2 % )
+Total virtual pins : 0
+Total memory bits : 0 / 2,396,160 ( 0 % )
+Embedded Multiplier 9-bit elements : 112 / 308 ( 36 % )
+Total PLLs : 0 / 4 ( 0 % )

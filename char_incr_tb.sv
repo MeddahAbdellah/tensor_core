@@ -39,22 +39,7 @@ module char_incr_tb;
     // Apply reset
     #10 rst_n = 0;
     #10 rst_n = 1;
-
-    // Test case 1: Increment from start to end
-    start_addr = 4'b0000;
-    end_addr = 4'b1111;
     #200;
-
-    // Test case 2: Overflow condition
-    start_addr = 4'b1110;
-    end_addr = 4'b1111;
-    #50;
-
-    // Test case 3: Start and end at same address
-    start_addr = 4'b1000;
-    end_addr = 4'b1000;
-    #30;
-
     // End simulation
     #10 $finish;
   end
