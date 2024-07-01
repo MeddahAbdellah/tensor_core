@@ -57,6 +57,7 @@ module sram_tb();
             $display("Address %0d: %h", i, dout);
         end
 
+        $display("Writing");
         // Write new values
         for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
             @(posedge clk);
@@ -66,6 +67,8 @@ module sram_tb();
             din = $random;
             @(posedge clk);
         end
+
+        $display("Reading again");
 
         // Read back written values
         for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
