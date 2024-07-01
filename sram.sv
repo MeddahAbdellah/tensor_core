@@ -18,7 +18,7 @@ module sram #(
     // Initialization
     initial begin
         if (INIT_FILE != "") begin
-            $readmemh(INIT_FILE, mem);
+            $readmemb(INIT_FILE, mem);
         end else begin
             for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
                 mem[i] = '0;
