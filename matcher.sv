@@ -60,7 +60,7 @@ module matcher#(
         .addr(input_incr.curr_addr)
     );
 
-    assign equal = (vocab_ram === input_ram);
+    assign equal = (vocab_ram.dout === input_ram.dout);
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign nullptr_input = ((input_ram.dout === 0) && equal);
     assign m_clk = (clk & nullptr_input);
