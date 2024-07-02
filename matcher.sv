@@ -18,7 +18,6 @@ module matcher#(
         .rst_n(rst_n),
         .start_addr(0),
         .end_addr(15),
-        .curr_addr(curr_vocab_addr),
         .overflow(vocab_overflow)
     );
 
