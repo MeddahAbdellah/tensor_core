@@ -45,11 +45,13 @@ module matcher_tb;
     #10 $stop;
   end
 
+  $display("all mem:%b", uut.vocab_ram.mem);
+
   // Monitor
   always @(posedge clk) begin
     $display("start=%b, end=%b, addr=%b",
              uut.vocab_incr.start_addr, uut.vocab_incr.end_addr, uut.vocab_incr.curr_addr);
-    $display("dout=%b, vocab_overflow=%b, nullptr_vocab=%b",uut.vocab_ram.dout, uut.vocab_overflow, uut.nullptr_vocab);
+    $display("sram_addr=%b, dout=%b, vocab_overflow=%b, nullptr_vocab=%b",uut.vocab_ram.addr, uut.vocab_ram.dout, uut.vocab_overflow, uut.nullptr_vocab);
     $display("------------------------------------------------------------------------------------------");
   end
 
