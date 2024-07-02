@@ -14,6 +14,9 @@ module matcher#(
     logic input_overflow;
     logic equal;
     logic m_clk;
+    logic blocker_sig;
+    logic blocker;
+    logic blocker_clk;
 
     char_incr #(
         .ADDR_WIDTH(ADDR_WIDTH)
@@ -61,12 +64,8 @@ module matcher#(
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign nullptr_input = ((input_ram.dout === 0) && equal);
     assign m_clk = (clk & nullptr_input);
-
-    logic blocker_sig;
-    logic blocker;
-    logic blocker_clk;
-
     assign blocker_clk = (!blocker && nullptr_vocab) || !(!blocker || equal);
+    assign blocker_sig = (clk && blocker);
 
     always_ff @(posedge blocker_clk or negedge rst_n) begin
         if(!rst_n) begin 
@@ -76,5 +75,4 @@ module matcher#(
         end
     end
 
-    assign blocker_sig = (clk && blocker);
 endmodule
