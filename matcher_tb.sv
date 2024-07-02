@@ -42,7 +42,7 @@ module matcher_tb;
 
     #400;
 
-    $display("all mem:%b", uut.vocab_ram.mem);
+    $display("all mem:%p", uut.vocab_ram.mem);
     // End simulation
     #10 $stop;
   end
