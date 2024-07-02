@@ -30,7 +30,7 @@ module matcher#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(vocab_incr.curr_addr),
+        .addr(vocab_incr.curr_addr)
     );
 
     assign nullptr_vocab = (vocab_ram.dout === 0);
