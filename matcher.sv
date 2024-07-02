@@ -66,10 +66,14 @@ module matcher#(
     logic blocker;
     logic blocker_clk;
 
-    assign blocker_clk = (!blocker && nullptr_vocab) || (!blocker nor equal);
+    assign blocker_clk = (!blocker && nullptr_vocab) || !(!blocker || equal);
 
-    always_ff @(posedge blocker_clk) begin
-        blocker <= !blocker;
+    always_ff @(posedge blocker_clk or negedge rst_n) begin
+        if(negedge rst_n) begin 
+            blocker <= 1'b1;
+        end else begin
+            blocker <= !blocker;
+        end
     end
 
     assign blocker_sig = (clk && blocker);
