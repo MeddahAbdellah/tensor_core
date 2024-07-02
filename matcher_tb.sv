@@ -41,11 +41,12 @@ module matcher_tb;
     #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
 
     #400;
+
+    $display("all mem:%b", uut.vocab_ram.mem);
     // End simulation
     #10 $stop;
   end
 
-  $display("all mem:%b", uut.vocab_ram.mem);
 
   // Monitor
   always @(posedge clk) begin
