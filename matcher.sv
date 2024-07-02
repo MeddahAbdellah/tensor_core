@@ -9,12 +9,16 @@ module matcher#(
 );
 
     logic nullptr_vocab;
+    logic nullptr_input;
     logic vocab_overflow;
+    logic input_overflow;
+    logic equal;
+    logic m_clk;
 
     char_incr #(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) vocab_incr(
-        .clk(clk),
+        .clk(m_clk),
         .rst_n(rst_n),
         .start_addr(0),
         .end_addr(15),
@@ -26,11 +30,47 @@ module matcher#(
         .ADDR_WIDTH(ADDR_WIDTH),
         .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin")
     ) vocab_ram (
-        .clk(clk),
+        .clk(m_clk),
         .cs(1'b1),
         .we(1'b0),
         .addr(vocab_incr.curr_addr)
     );
 
+    char_incr #(
+        .ADDR_WIDTH(ADDR_WIDTH)
+    ) input_incr(
+        .clk(blocker_sig),
+        .rst_n(equal),
+        .start_addr(0),
+        .end_addr(15),
+        .overflow(input_overflow)
+    );
+
+    sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .INIT_FILE("C:\\verilog_work\\tensor_core\\word.bin")
+    ) input_ram (
+        .clk(m_clk),
+        .cs(1'b1),
+        .we(1'b0),
+        .addr(input_incr.curr_addr)
+    );
+
+    assign equal = (vocab_ram === input_ram);
     assign nullptr_vocab = (vocab_ram.dout === 0);
+    assign nullptr_input = ((input_ram.dout === 0) && equal);
+    assign m_clk = (clk & nullptr_input);
+
+    logic blocker_sig;
+    logic blocker;
+    logic blocker_clk;
+
+    assign blocker_clk = (!blocker && nullptr_vocab) || (!blocker nor equal);
+
+    always_ff @(posedge blocker_clk) begin
+        blocker <= !blocker;
+    end
+
+    assign blocker_sig = (clk && blocker)
 endmodule
