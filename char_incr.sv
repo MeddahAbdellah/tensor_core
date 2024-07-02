@@ -10,7 +10,7 @@ module char_incr#(
 );
 
     always_ff @(posedge clk or negedge rst_n) begin
-        if(rst_n) begin
+        if(rst_n == 0) begin
             curr_addr <= start_addr;
             overflow <= 0;
         end else if(curr_addr == end_addr) begin

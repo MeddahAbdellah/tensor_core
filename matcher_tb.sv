@@ -40,7 +40,7 @@ module matcher_tb;
     // Test case 1: Set a sample word
     #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
 
-    #200;
+    #400;
     // End simulation
     #10 $stop;
   end
