@@ -8,10 +8,8 @@ module matcher#(
     input logic [WORD_LENGTH * DATA_WIDTH -1: 0] word
 );
 
-    logic [ADDR_WIDTH - 1: 0] curr_vocab_addr;
-    logic [DATA_WIDTH - 1: 0] curr_vocab;
-    logic vocab_overflow;
     logic nullptr_vocab;
+    logic vocab_overflow;
 
     char_incr #(
         .ADDR_WIDTH(ADDR_WIDTH)
@@ -32,9 +30,8 @@ module matcher#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(curr_vocab_addr),
-        .dout(curr_vocab)
+        .addr(vocab_incr.curr_addr),
     );
 
-    assign nullptr_vocab = (curr_vocab === 0);
+    assign nullptr_vocab = (vocab_ram.dout === 0);
 endmodule
