@@ -69,7 +69,7 @@ module matcher#(
     assign blocker_clk = (!blocker && nullptr_vocab) || !(!blocker || equal);
 
     always_ff @(posedge blocker_clk or negedge rst_n) begin
-        if(negedge rst_n) begin 
+        if(!rst_n) begin 
             blocker <= 1'b1;
         end else begin
             blocker <= !blocker;
