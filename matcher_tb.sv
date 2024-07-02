@@ -47,6 +47,8 @@ module matcher_tb;
 
   // Monitor
   always @(posedge clk) begin
+    $display("start=%b, end=%b, vocab_overflow=%b, nullptr_vocab=%b",
+             uut.vocab_incr.start_addr, uut.vocab_incr.end_addr, uut.vocab_incr.curr_addr);
     $display("curr_vocab_addr=%b, curr_vocab=%b, vocab_overflow=%b, nullptr_vocab=%b",
              uut.curr_vocab_addr, uut.curr_vocab, uut.vocab_overflow, uut.nullptr_vocab);
   end
