@@ -72,5 +72,5 @@ module matcher#(
         blocker <= !blocker;
     end
 
-    assign blocker_sig = (clk && blocker)
+    assign blocker_sig = (clk && blocker);
 endmodule
