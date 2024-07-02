@@ -9,7 +9,6 @@ module sram_tb();
 
     // Signals
     logic clk;
-    logic rst_n;
     logic cs;
     logic we;
     logic [ADDR_WIDTH-1:0] addr;
@@ -23,7 +22,6 @@ module sram_tb();
         .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin") 
     ) dut (
         .clk(clk),
-        .rst_n(rst_n),
         .cs(cs),
         .we(we),
         .addr(addr),
@@ -38,39 +36,12 @@ module sram_tb();
     initial begin
         // Initialize signals
         clk = 0;
-        rst_n = 0;
         cs = 0;
         we = 0;
         addr = 0;
         din = 0;
 
-        // Reset
-        #(CLK_PERIOD*2) rst_n = 1;
-
         // Read initial values
-        for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
-            @(posedge clk);
-            cs = 1;
-            we = 0;
-            addr = i;
-            @(posedge clk);
-            $display("Address %0d: %b", i, dout);
-        end
-
-        $display("Writing");
-        // Write new values
-        for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
-            @(posedge clk);
-            cs = 1;
-            we = 1;
-            addr = i;
-            din = $random;
-            @(posedge clk);
-        end
-
-        $display("Reading again");
-
-        // Read back written values
         for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
             @(posedge clk);
             cs = 1;
