@@ -30,7 +30,6 @@ module matcher#(
         .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin")
     ) vocab_ram (
         .clk(clk),
-        .rst_n(rst_n),
         .cs(1'b1),
         .we(1'b0),
         .addr(curr_vocab_addr),

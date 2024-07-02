@@ -4,7 +4,6 @@ module sram #(
     parameter INIT_FILE = "" // New parameter for initialization file
 ) (
     input logic clk,
-    input logic rst_n,
     input logic cs,
     input logic we,
     input logic [ADDR_WIDTH-1:0] addr,
@@ -27,10 +26,8 @@ module sram #(
     end
 
     // Read operation
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            dout <= '0;
-        end else if (cs && !we) begin
+    always_ff @(posedge clk) begin
+        if (cs && !we) begin
             dout <= mem[addr];
         end
     end
