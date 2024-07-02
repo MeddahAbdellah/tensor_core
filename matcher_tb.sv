@@ -49,7 +49,7 @@ module matcher_tb;
   always @(posedge clk) begin
     $display("start=%b, end=%b, addr=%b",
              uut.vocab_incr.start_addr, uut.vocab_incr.end_addr, uut.vocab_incr.curr_addr);
-    $display("vocab_overflow=%b, nullptr_vocab=%b", uut.vocab_overflow, uut.nullptr_vocab);
+    $display("dout=%b, vocab_overflow=%b, nullptr_vocab=%b",uut.vocab_ram.dout, uut.vocab_overflow, uut.nullptr_vocab);
     $display("------------------------------------------------------------------------------------------");
   end
 
