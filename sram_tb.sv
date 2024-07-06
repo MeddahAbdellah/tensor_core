@@ -47,7 +47,7 @@ module sram_tb();
             @(posedge clk);
             addr = i;
             @(posedge clk);
-            $display("Address %0d: %b", i, dout);
+            $display("Address %b: %b", addr, dout);
         end
 
         // Test complete
