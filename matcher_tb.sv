@@ -55,8 +55,8 @@ module matcher_tb;
              uut.vocab_incr.curr_addr, uut.vocab_ram.dout);
     $display("Input: addr=%b, val=%b",
              uut.input_incr.curr_addr, uut.input_ram.dout);
-    $display("vocab_overflow=%b, nullptr_vocab=%b, input_overflow=%b, nullptr_input=%b",
-             uut.vocab_overflow, uut.nullptr_vocab, uut.input_overflow, uut.nullptr_input);
+    $display("vocab_overflow=%b, nullptr_vocab=%b, input_overflow=%b, matching_done=%b",
+             uut.vocab_overflow, uut.nullptr_vocab, uut.input_overflow, uut.matching_done);
     $display("------------------------------------------------------------------------------------------");
   end
 
