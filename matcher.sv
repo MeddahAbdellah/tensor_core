@@ -45,7 +45,7 @@ module matcher#(
     ) input_incr(
         .clk(blocker_sig),
         .rst_n(input_incr_rst_n),
-        .halt(!nullptr_vocab)
+        .halt(!nullptr_vocab),
         .start_addr(0),
         .end_addr(15),
         .overflow(input_overflow)
@@ -67,7 +67,6 @@ module matcher#(
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign matching_done = ((input_ram.dout === 0) && equal);
     assign m_clk = (clk & !matching_done);
-    assign input_incr_cs_n = 
     // assign blocker_clk = (!blocked_n & nullptr_vocab) || (blocked_n & !equal);
     // assign blocker_sig = (m_clk & blocked_n);
 
