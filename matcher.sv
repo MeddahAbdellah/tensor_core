@@ -9,13 +9,13 @@ module matcher#(
 );
 
     logic nullptr_vocab;
-    logic nullptr_input;
+    logic matching_done;
     logic vocab_overflow;
     logic input_overflow;
     logic equal;
     logic m_clk;
     logic blocker_sig;
-    logic blocked;
+    logic blocked_n;
     logic blocker_clk;
     logic input_incr_rst_n;
 
@@ -45,6 +45,7 @@ module matcher#(
     ) input_incr(
         .clk(blocker_sig),
         .rst_n(input_incr_rst_n),
+        .halt(!nullptr_vocab)
         .start_addr(0),
         .end_addr(15),
         .overflow(input_overflow)
@@ -64,17 +65,18 @@ module matcher#(
     assign equal = (vocab_ram.dout === input_ram.dout);
     assign input_incr_rst_n = rst_n & equal;
     assign nullptr_vocab = (vocab_ram.dout === 0);
-    assign nullptr_input = ((input_ram.dout === 0) && equal);
-    assign m_clk = (clk && !nullptr_input);
-    assign blocker_clk = (!blocked && nullptr_vocab) || (blocked & !equal);
-    assign blocker_sig = (m_clk && blocked);
+    assign matching_done = ((input_ram.dout === 0) && equal);
+    assign m_clk = (clk & !matching_done);
+    assign input_incr_cs_n = 
+    // assign blocker_clk = (!blocked_n & nullptr_vocab) || (blocked_n & !equal);
+    // assign blocker_sig = (m_clk & blocked_n);
 
-    always_ff @(posedge blocker_clk or negedge rst_n) begin
-        if(!rst_n) begin 
-            blocked <= 1'b1;
-        end else begin
-            blocked <= !blocked;
-        end
-    end
+    // always_ff @(posedge blocker_clk or negedge rst_n) begin
+    //     if(!rst_n) begin 
+    //         blocked_n <= 1'b1;
+    //     end else begin
+    //         blocked_n <= !blocked_n;
+    //     end
+    // end
 
 endmodule
