@@ -37,7 +37,7 @@ module sram_tb();
     initial begin
         // Initialize signals
         clk = 0;
-        cs = 0;
+        cs = 1;
         we = 0;
         addr = 0;
         din = 0;
@@ -45,8 +45,6 @@ module sram_tb();
         // Read initial values
         for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
             @(posedge clk);
-            cs = 1;
-            we = 0;
             addr = i;
             @(posedge clk);
             $display("Address %0d: %b", i, dout);
