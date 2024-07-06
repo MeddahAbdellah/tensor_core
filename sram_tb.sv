@@ -31,6 +31,7 @@ module sram_tb();
 
     // Clock generation
     always #(CLK_PERIOD/2) clk = ~clk;
+    
 
     // Test stimulus
     initial begin
