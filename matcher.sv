@@ -31,7 +31,7 @@ module matcher#(
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\verilog_work\\tensor_core\\vocab.bin")
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
     ) vocab_ram (
         .clk(m_clk),
         .cs(1'b1),
@@ -52,7 +52,7 @@ module matcher#(
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\verilog_work\\tensor_core\\word.bin")
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\word.bin")
     ) input_ram (
         .clk(m_clk),
         .cs(1'b1),
