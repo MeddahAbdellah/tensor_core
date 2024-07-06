@@ -15,7 +15,7 @@ module matcher#(
     logic equal;
     logic m_clk;
     logic blocker_sig;
-    logic blocker;
+    logic blocked;
     logic blocker_clk;
     logic input_incr_rst_n;
 
@@ -66,14 +66,14 @@ module matcher#(
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign nullptr_input = ((input_ram.dout === 0) && equal);
     assign m_clk = (clk && !nullptr_input);
-    assign blocker_clk = (!blocker && nullptr_vocab) || !(!blocker || equal);
-    assign blocker_sig = (clk && blocker);
+    assign blocker_clk = (!blocked && nullptr_vocab) || (blocked & !equal);
+    assign blocker_sig = (m_clk && blocked);
 
     always_ff @(posedge blocker_clk or negedge rst_n) begin
         if(!rst_n) begin 
-            blocker <= 1'b1;
+            blocked <= 1'b1;
         end else begin
-            blocker <= !blocker;
+            blocked <= !blocked;
         end
     end
 
