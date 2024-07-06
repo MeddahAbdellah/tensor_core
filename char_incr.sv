@@ -10,7 +10,7 @@ module char_incr#(
     output logic overflow
 );
 
-    logic waiting;
+    logic waiting = 1;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(rst_n == 0) begin
