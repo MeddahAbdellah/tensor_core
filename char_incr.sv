@@ -18,15 +18,21 @@ module char_incr#(
             overflow <= 0;
             waiting <= 1;
         end else if(curr_addr == end_addr) begin
+            waiting <= waiting;
+            curr_addr <= curr_addr;
             overflow <= 1;
         end else if (!waiting) begin
+            waiting <= waiting;
             curr_addr <= curr_addr + 1;
             overflow <= 0;
         end else if(curr_addr == start_addr) begin
             waiting <= halt;
+            curr_addr <= curr_addr;
+            overflow <= 0;
         end else begin
             curr_addr <= curr_addr;
             overflow <= overflow;
+            waiting <= waiting;
         end
     end
 
