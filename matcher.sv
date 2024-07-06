@@ -17,6 +17,7 @@ module matcher#(
     logic blocker_sig;
     logic blocker;
     logic blocker_clk;
+    logic input_incr_rst_n;
 
     char_incr #(
         .ADDR_WIDTH(ADDR_WIDTH)
@@ -43,7 +44,7 @@ module matcher#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) input_incr(
         .clk(blocker_sig),
-        .rst_n(equal),
+        .rst_n(input_incr_rst_n),
         .start_addr(0),
         .end_addr(15),
         .overflow(input_overflow)
@@ -61,6 +62,7 @@ module matcher#(
     );
 
     assign equal = (vocab_ram.dout === input_ram.dout);
+    assign input_incr_rst_n = rst_n & equal;
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign nullptr_input = ((input_ram.dout === 0) && equal);
     assign m_clk = (clk && !nullptr_input);
