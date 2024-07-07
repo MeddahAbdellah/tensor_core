@@ -77,23 +77,26 @@ module matcher#(
                         av <= av;
                         ai <= ai;
                         found <= 1;
+                        done <= 1;
                     end else if (vocab_overflow) begin
                         state <= 2'b11;
                         av <= av;
                         ai <= ai;
                         found <= 0;
+                        done <= 1;
                     end else if(!equal) begin
                         state <= 2'b10;
                         av <= av;
                         ai <= ai;
                         found <= 0;
+                        done <= 0;
                     end else begin
                         state <= state;
                         av <= av + 1;
                         ai <= ai + 1;
                         found <= 0;
+                        done <= 0;
                     end
-                    done <= done;
                 end
                 2'b10: begin
                     ai <= 0;
