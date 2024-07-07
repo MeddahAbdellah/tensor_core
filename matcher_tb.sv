@@ -44,7 +44,7 @@ module matcher_tb;
     #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
 
     #10 cs = 1;
-    #350;
+    #550;
 
     $display("all mem:%p", uut.vocab_ram.mem);
     // End simulation
