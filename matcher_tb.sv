@@ -55,10 +55,10 @@ module matcher_tb;
   // Monitor
   always @(posedge clk) begin
     $display("rst_n:%b, cs:%b", uut.rst_n, uut.cs);
-    $display("Vocab: cs=%b addr=%b, val=%b",
-             uut.vocab_incr.cs, uut.vocab_incr.curr_addr, uut.vocab_ram.dout);
-    $display("Input: cs=%b addr=%b, val=%b",
-             uut.input_incr.cs, uut.input_incr.curr_addr, uut.input_ram.dout);
+    $display("Vocab: addr=%b, val=%b",
+             uut.av, uut.vocab_ram.dout);
+    $display("Input: addr=%b, val=%b",
+             uut.ai, uut.input_ram.dout);
     $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b",
              uut.state, uut.equal, uut.nullptr_vocab, uut.nullptr_input);
     $display("vocab_overflow=%b, input_overflow=%b, matching_done=%b",
