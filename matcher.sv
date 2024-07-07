@@ -72,7 +72,6 @@ module matcher#(
                     e <= 0;
                 end
                 2'b01: begin
-
                     if ((nullptr_input && equal) || vocab_overflow) begin
                         state <= 3'b11;
                         av <= av;
@@ -90,12 +89,13 @@ module matcher#(
                     e <= 0;
                 end
                 2'b10: begin
-                    av <= av + 1;
                     ai <= 0;
                     if (nullptr_vocab) begin
                         state <= 3'b01;
+                        av <= av;
                     end else begin
                         state <= state;
+                        av <= av + 1;
                     end
                     d <= d;
                     e <= 0;
