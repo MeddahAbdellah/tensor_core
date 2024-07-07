@@ -9,8 +9,8 @@ module matcher#(
     input logic [WORD_LENGTH * DATA_WIDTH -1: 0] word
 );
 
-    logic d;
-    logic e;
+    logic done;
+    logic found;
 
     logic start_addr = 0;
     logic end_addr = 15;
@@ -56,8 +56,8 @@ module matcher#(
             state <= 0;
             av <= start_addr;
             ai <= 0;
-            d <= 0;
-            e <= 0;
+            done <= 0;
+            found <= 0;
         end else begin
             case(state)
                 2'b00: begin
@@ -68,32 +68,32 @@ module matcher#(
                     end else begin
                         state <= state;
                     end
-                    d <= d;
-                    e <= 0;
+                    done <= done;
+                    found <= 0;
                 end
                 2'b01: begin
                     if (nullptr_input && equal) begin
                         state <= 2'b11;
                         av <= av;
                         ai <= ai;
-                        e <= 1;
+                        found <= 1;
                     end else if (vocab_overflow) begin
                         state <= 2'b11;
                         av <= av;
                         ai <= ai;
-                        e <= 0;
+                        found <= 0;
                     end else if(!equal) begin
                         state <= 2'b10;
                         av <= av;
                         ai <= ai;
-                        e <= 0;
+                        found <= 0;
                     end else begin
                         state <= state;
                         av <= av + 1;
                         ai <= ai + 1;
-                        e <= 0;
+                        found <= 0;
                     end
-                    d <= d;
+                    done <= done;
                 end
                 2'b10: begin
                     ai <= 0;
@@ -104,22 +104,22 @@ module matcher#(
                         state <= state;
                         av <= av + 1;
                     end
-                    d <= d;
-                    e <= 0;
+                    done <= done;
+                    found <= 0;
                 end
                 2'b11: begin
                     av <= av;
                     ai <= ai;
                     state <= state;
-                    d <= 1;
-                    e <= e;
+                    done <= 1;
+                    found <= found;
                 end
                 default: begin
                     av <= av;
                     ai <= ai;
                     state <= state;
-                    d <= d;
-                    e <= e;
+                    done <= done;
+                    found <= found;
                 end
             endcase
         end
