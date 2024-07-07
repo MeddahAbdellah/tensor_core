@@ -84,6 +84,12 @@ module matcher#(
                         ai <= ai;
                         found <= 0;
                         done <= 1;
+                    end else if(!equal && nullptr_vocab) begin
+                        state <= 2'b10;
+                        av <= av + 1;
+                        ai <= ai;
+                        found <= 0;
+                        done <= 0;
                     end else if(!equal) begin
                         state <= 2'b10;
                         av <= av;
