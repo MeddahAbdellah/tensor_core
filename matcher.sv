@@ -72,26 +72,33 @@ module matcher#(
                     e <= 0;
                 end
                 2'b01: begin
-                    if ((nullptr_input && equal) || vocab_overflow) begin
-                        state <= 3'b11;
+                    if (nullptr_input && equal) begin
+                        state <= 2'b11;
                         av <= av;
                         ai <= ai;
+                        e <= 1;
+                    end else if (vocab_overflow) begin
+                        state <= 2'b11;
+                        av <= av;
+                        ai <= ai;
+                        e <= 0;
                     end else if(!equal) begin
-                        state <= 3'b10;
+                        state <= 2'b10;
                         av <= av;
                         ai <= ai;
+                        e <= 0;
                     end else begin
                         state <= state;
                         av <= av + 1;
                         ai <= ai + 1;
+                        e <= 0;
                     end
                     d <= d;
-                    e <= 0;
                 end
                 2'b10: begin
                     ai <= 0;
                     if (nullptr_vocab) begin
-                        state <= 3'b01;
+                        state <= 2'b01;
                         av <= av;
                     end else begin
                         state <= state;
@@ -105,14 +112,14 @@ module matcher#(
                     ai <= ai;
                     state <= state;
                     d <= 1;
-                    e <= equal;
+                    e <= e;
                 end
                 default: begin
                     av <= av;
                     ai <= ai;
                     state <= state;
                     d <= d;
-                    e <= equal;
+                    e <= e;
                 end
             endcase
         end
