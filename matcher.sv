@@ -15,7 +15,7 @@ module matcher#(
     logic start_addr = 0;
     logic end_addr = 15;
 
-    logic [2:0] state = 0;
+    logic [1:0] state = 0;
     logic [ADDR_WIDTH-1: 0] av = 0;
     logic [ADDR_WIDTH-1: 0] ai;
 
@@ -60,62 +60,44 @@ module matcher#(
             e <= 0;
         end else begin
             case(state)
-                3'b000: begin
+                2'b00: begin
                     av <= start_addr;
                     ai <= 0;
                     if(cs) begin
-                        state <= 3'b001;
+                        state <= 2'b01;
                     end else begin
                         state <= state;
                     end
                     d <= d;
                     e <= 0;
                 end
-                3'b001: begin
-                    av <= av + 1;
-                    ai <= ai + 1;
+                2'b01: begin
+                    av <= av;
+                    ai <= ai;
                     if ((nullptr_input && equal) || vocab_overflow) begin
-                        state <= 3'b101;
+                        state <= 3'b11;
                     end else if(!equal) begin
-                        state <= 3'b011;
-                    end else if(nullptr_vocab) begin
-                        state <= 3'b010;
+                        state <= 3'b10;
                     end else begin
                         state <= state;
+                        av <= av + 1;
+                        ai <= ai + 1;
                     end
                     d <= d;
                     e <= 0;
                 end
-                3'b010: begin
-                    av <= av;
-                    ai <= 0;
-                    state <= 3'b001;
-                    d <= d;
-                    e <= 0;
-                end
-                3'b011: begin
-                    av <= av;
-                    ai <= 0;
-                    if (nullptr_vocab) begin
-                        state <= 3'b001;
-                    end else begin
-                        state <= 3'b100;
-                    end
-                    d <= d;
-                    e <= 0;
-                end
-                3'b100: begin
+                2'b10: begin
                     av <= av + 1;
                     ai <= 0;
                     if (nullptr_vocab) begin
-                        state <= 3'b001;
+                        state <= 3'b01;
                     end else begin
                         state <= state;
                     end
                     d <= d;
                     e <= 0;
                 end
-                3'b101: begin
+                2'b11: begin
                     av <= av;
                     ai <= ai;
                     state <= state;
