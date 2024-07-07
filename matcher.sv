@@ -13,7 +13,7 @@ module matcher#(
     logic e;
 
     logic start_addr = 0;
-    logic end_addr = 0;
+    logic end_addr = 15;
 
     logic [2:0] state = 0;
     logic [ADDR_WIDTH-1: 0] av = 0;
