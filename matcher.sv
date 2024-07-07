@@ -32,7 +32,7 @@ module matcher#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(vocab_incr.curr_addr)
+        .addr(av)
     );
 
     sram #(
@@ -43,7 +43,7 @@ module matcher#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(input_incr.curr_addr)
+        .addr(ai)
     );
 
     assign equal = (vocab_ram.dout === input_ram.dout);
