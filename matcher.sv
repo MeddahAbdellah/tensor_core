@@ -111,7 +111,7 @@ module matcher#(
                     av <= av;
                     ai <= ai;
                     state <= state;
-                    d <= 1;
+                    d <= d;
                     e <= equal;
                 end
             endcase
