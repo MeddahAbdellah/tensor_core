@@ -61,8 +61,8 @@ module matcher_tb;
              uut.ai, uut.input_ram.dout);
     $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b",
              uut.state, uut.equal, uut.nullptr_vocab, uut.nullptr_input);
-    $display("vocab_overflow=%b, input_overflow=%b, matching_done=%b",
-             uut.vocab_overflow, uut.input_overflow, uut.d);
+    $display("vocab_overflow=%b, matching_done=%b",
+             uut.vocab_overflow, uut.d);
     $display("------------------------------------------------------------------------------------------");
   end
 
