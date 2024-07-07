@@ -31,6 +31,7 @@ module matcher_tb;
     // Initialize inputs
     clk = 0;
     rst_n = 1;
+    cs = 0;
     word = {DATA_WIDTH*WORD_LENGTH{1'b0}};
 
     // Apply reset
@@ -40,6 +41,7 @@ module matcher_tb;
     // Test case 1: Set a sample word
     #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
 
+    #10 cs = 1;
     #200;
 
     $display("all mem:%p", uut.vocab_ram.mem);
@@ -50,13 +52,13 @@ module matcher_tb;
 
   // Monitor
   always @(posedge clk) begin
-    $display("rst_n:%b", rst_n);
+    $display("rst_n:%b, cs:%b", rst_n, cs);
     $display("Vocab: addr=%b, val=%b",
              uut.vocab_incr.curr_addr, uut.vocab_ram.dout);
     $display("Input: addr=%b, val=%b",
              uut.input_incr.curr_addr, uut.input_ram.dout);
-    $display("vocab_overflow=%b, nullptr_vocab=%b, input_overflow=%b, matching_done=%b",
-             uut.vocab_overflow, uut.nullptr_vocab, uut.input_overflow, uut.matching_done);
+    $display("state=%b, vocab_overflow=%b, nullptr_vocab=%b, input_overflow=%b, matching_done=%b",
+             uut.state, uut.vocab_overflow, uut.nullptr_vocab, uut.input_overflow, uut.d);
     $display("------------------------------------------------------------------------------------------");
   end
 
