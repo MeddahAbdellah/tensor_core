@@ -13,13 +13,13 @@ module matcher#(
     logic found;
 
     logic start_addr = 0;
-    logic end_addr = 15;
+    logic end_addr = 4'b1111;
 
     logic [1:0] state = 0;
     logic [ADDR_WIDTH-1: 0] av = 0;
     logic [ADDR_WIDTH-1: 0] ai;
 
-    logic vocab_overflow;
+    logic vocab_overflow = 0;
     logic nullptr_vocab;
     logic nullptr_input;
     logic equal;
