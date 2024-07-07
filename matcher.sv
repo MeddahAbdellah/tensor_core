@@ -101,7 +101,7 @@ module matcher#(
                         state <= 3'b110;
                     end else if(!equal) begin
                         state <= 3'b011;
-                    end if(nullptr_vocab) begin
+                    end else if(nullptr_vocab) begin
                         state <= 3'b010;
                     end else begin
                         state <= state;
