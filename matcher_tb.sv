@@ -20,6 +20,7 @@ module matcher_tb;
     .DATA_WIDTH(DATA_WIDTH)
   ) uut (
     .clk(clk),
+    .cs(cs),
     .rst_n(rst_n),
     .word(word)
   );
@@ -53,7 +54,7 @@ module matcher_tb;
 
   // Monitor
   always @(posedge clk) begin
-    $display("rst_n:%b, cs:%b", rst_n, cs);
+    $display("rst_n:%b, cs:%b", uut.rst_n, uut.cs);
     $display("Vocab: addr=%b, val=%b",
              uut.vocab_incr.curr_addr, uut.vocab_ram.dout);
     $display("Input: addr=%b, val=%b",
