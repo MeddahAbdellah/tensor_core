@@ -62,7 +62,7 @@ module matcher_tb;
     $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b",
              uut.state, uut.equal, uut.nullptr_vocab, uut.nullptr_input);
     $display("vocab_overflow=%b, input_overflow=%b, matching_done=%b",
-             uut.state, uut.vocab_overflow, uut.input_overflow, uut.d);
+             uut.vocab_overflow, uut.input_overflow, uut.d);
     $display("------------------------------------------------------------------------------------------");
   end
 
