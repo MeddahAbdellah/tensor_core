@@ -12,28 +12,17 @@ module matcher#(
     logic d;
     logic e;
 
+    logic start_addr = 0;
+    logic end_addr = 0;
 
     logic [2:0] state = 0;
-    logic input_incr_rst_n;
-    logic vocab_cs;
-    logic input_cs;
+    logic [ADDR_WIDTH-1: 0] av = 0;
+    logic [ADDR_WIDTH-1: 0] ai;
 
-    logic input_overflow;
     logic vocab_overflow;
     logic nullptr_vocab;
     logic nullptr_input;
     logic equal;
-
-    char_incr #(
-        .ADDR_WIDTH(ADDR_WIDTH)
-    ) vocab_incr(
-        .clk(clk),
-        .rst_n(rst_n),
-        .cs(vocab_cs),
-        .start_addr(0),
-        .end_addr(15),
-        .overflow(vocab_overflow)
-    );
 
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -44,17 +33,6 @@ module matcher#(
         .cs(1'b1),
         .we(1'b0),
         .addr(vocab_incr.curr_addr)
-    );
-
-    char_incr #(
-        .ADDR_WIDTH(ADDR_WIDTH)
-    ) input_incr(
-        .clk(clk),
-        .rst_n(input_incr_rst_n),
-        .cs(input_cs),
-        .start_addr(0),
-        .end_addr(15),
-        .overflow(input_overflow)
     );
 
     sram #(
@@ -71,34 +49,33 @@ module matcher#(
     assign equal = (vocab_ram.dout === input_ram.dout);
     assign nullptr_vocab = (vocab_ram.dout === 0);
     assign nullptr_input = (input_ram.dout === 0);
+    assign vocab_overflow = (av === end_addr);
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin 
             state <= 0;
-            vocab_cs <= 0;
-            input_cs <= 0;
+            av <= start_addr;
+            ai <= 0;
             d <= 0;
-            input_incr_rst_n <= 0;
+            e <= 0;
         end else begin
             case(state)
                 3'b000: begin
-                    vocab_cs <= 0;
-                    input_cs <= 0;
+                    av <= start_addr;
+                    ai <= 0;
                     if(cs) begin
                         state <= 3'b001;
                     end else begin
                         state <= state;
                     end
                     d <= d;
-                    e <= equal;
-                    input_incr_rst_n <= input_incr_rst_n;
+                    e <= 0;
                 end
                 3'b001: begin
-                    vocab_cs <= 1;
-                    input_cs <= 1;
-                    input_incr_rst_n <= 1;
+                    av <= av + 1;
+                    ai <= ai + 1;
                     if ((nullptr_input && equal) || vocab_overflow) begin
-                        state <= 3'b110;
+                        state <= 3'b101;
                     end else if(!equal) begin
                         state <= 3'b011;
                     end else if(nullptr_vocab) begin
@@ -107,50 +84,49 @@ module matcher#(
                         state <= state;
                     end
                     d <= d;
-                    e <= equal;
+                    e <= 0;
                 end
                 3'b010: begin
-                    vocab_cs <= 0;
-                    input_cs <= 0;
-                    input_incr_rst_n <= 0;
+                    av <= av;
+                    ai <= 0;
                     state <= 3'b001;
                     d <= d;
-                    e <= equal;
+                    e <= 0;
                 end
                 3'b011: begin
-                    vocab_cs <= 1;
-                    input_cs <= 0;
-                    input_incr_rst_n <= 0;
+                    av <= av;
+                    ai <= 0;
                     if (nullptr_vocab) begin
-                        state <= 3'b101;
+                        state <= 3'b001;
                     end else begin
                         state <= 3'b100;
                     end
                     d <= d;
-                    e <= equal;
+                    e <= 0;
                 end
                 3'b100: begin
-                    vocab_cs <= 1;
-                    input_cs <= 0;
-                    input_incr_rst_n <= 1;
+                    av <= av + 1;
+                    ai <= 0;
                     if (nullptr_vocab) begin
-                        state <= 3'b101;
+                        state <= 3'b001;
                     end else begin
                         state <= state;
                     end
                     d <= d;
-                    e <= equal;
+                    e <= 0;
                 end
                 3'b101: begin
-                    vocab_cs <= 0;
-                    input_cs <= 0;
-                    input_incr_rst_n <= 1;
-                    state <= 3'b001;
-                    d <= d;
+                    av <= av;
+                    ai <= ai;
+                    state <= state;
+                    d <= 1;
                     e <= equal;
                 end
-                3'b110: begin
-                    d <= 1;
+                default: begin
+                    av <= av;
+                    ai <= ai;
+                    state <= state;
+                    d <= d;
                     e <= equal;
                 end
             endcase
