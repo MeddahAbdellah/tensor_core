@@ -12,8 +12,8 @@ module matcher#(
     logic done;
     logic found;
 
-    logic start_addr = 0;
-    logic end_addr = 4'b1111;
+    logic [ADDR_WIDTH-1: 0] start_addr = 0;
+    logic [ADDR_WIDTH-1: 0] end_addr = 4'b1111;
 
     logic [1:0] state = 0;
     logic [ADDR_WIDTH-1: 0] av = 0;
