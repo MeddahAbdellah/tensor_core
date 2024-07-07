@@ -19,7 +19,7 @@ module matcher#(
     logic [ADDR_WIDTH-1: 0] av = 0;
     logic [ADDR_WIDTH-1: 0] ai;
 
-    logic vocab_overflow = 0;
+    logic vocab_overflow;
     logic nullptr_vocab;
     logic nullptr_input;
     logic equal;
