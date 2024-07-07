@@ -98,7 +98,7 @@ module matcher#(
                     input_cs <= 1;
                     input_incr_rst_n <= 1;
                     if ((nullptr_input && equal) || vocab_overflow) begin
-                        state <= 3'b110
+                        state <= 3'b110;
                     end else if(!equal) begin
                         state <= 3'b011;
                     end if(nullptr_vocab) begin

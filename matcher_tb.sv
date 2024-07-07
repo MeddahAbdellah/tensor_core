@@ -10,6 +10,7 @@ module matcher_tb;
   // Signals
   logic clk;
   logic rst_n;
+  logic cs;
   logic [WORD_LENGTH * DATA_WIDTH - 1 : 0] word;
 
   // Instantiate the Unit Under Test (UUT)
