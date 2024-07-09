@@ -8,8 +8,8 @@ module encoder#(
 );
     matcher #(
         .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
-    ) matcher(
+        .ADDR_WIDTH(ADDR_WIDTH)
+    ) matcher (
         .clk(clk),
         .cs(cs),
         .rst_n(rst_n),
