@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module matcher_tb;
+module encoder_tb;
 
   // Parameters
   parameter ADDR_WIDTH = 4;
