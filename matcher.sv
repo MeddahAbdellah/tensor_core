@@ -1,13 +1,15 @@
 // working
 module matcher#(
     parameter ADDR_WIDTH = 4,
-    parameter WORD_LENGTH = 3,
     parameter DATA_WIDTH = 8
 )(
     input logic clk,
     input logic rst_n,
     input logic cs,
-    input logic [WORD_LENGTH * DATA_WIDTH -1: 0] word
+    input logic [DATA_WIDTH -1: 0] val_vocab,
+    input logic [DATA_WIDTH -1: 0] val_input,
+    output logic [ADDR_WIDTH-1: 0] addr_v,
+    output logic [ADDR_WIDTH-1: 0] addr_i
 );
 
     logic done;
@@ -25,27 +27,8 @@ module matcher#(
     logic nullptr_input;
     logic equal;
 
-    sram #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
-    ) vocab_ram (
-        .clk(clk),
-        .cs(1'b1),
-        .we(1'b0),
-        .addr(av)
-    );
-
-    sram #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\word.bin")
-    ) input_ram (
-        .clk(clk),
-        .cs(1'b1),
-        .we(1'b0),
-        .addr(ai)
-    );
+    assign addr_v = av;
+    assign addr_i = ai;
 
     assign equal = (vocab_ram.dout === input_ram.dout);
     assign nullptr_vocab = (vocab_ram.dout === 0);
