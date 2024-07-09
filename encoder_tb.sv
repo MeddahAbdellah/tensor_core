@@ -12,7 +12,7 @@ module encoder_tb;
   logic cs;
 
   // Instantiate the Unit Under Test (UUT)
-  ecoder #(
+  encoder #(
     .ADDR_WIDTH(ADDR_WIDTH),
     .DATA_WIDTH(DATA_WIDTH)
   ) uut (
