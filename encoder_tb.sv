@@ -18,7 +18,7 @@ module matcher_tb;
   ) uut (
     .clk(clk),
     .cs(cs),
-    .rst_n(rst_n),
+    .rst_n(rst_n)
   );
 
   // Clock generation

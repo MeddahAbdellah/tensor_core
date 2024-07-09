@@ -4,7 +4,7 @@ module encoder#(
 ) (
     input logic clk,
     input logic cs,
-    input logic rst_n,
+    input logic rst_n
 );
     matcher #(
         .DATA_WIDTH(DATA_WIDTH),
