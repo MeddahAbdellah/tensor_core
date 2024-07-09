@@ -44,9 +44,9 @@ module encoder_tb;
   always @(posedge clk) begin
     $display("rst_n:%b, cs:%b", uut.matcher.rst_n, uut.matcher.cs);
     $display("Vocab: addr=%b, val=%b",
-             uut.matcher.av, uut.matcher.vocab_ram.dout);
+             uut.matcher.av, uut.matcher.val_vocab);
     $display("Input: addr=%b, val=%b",
-             uut.matcher.ai, uut.matcher.input_ram.dout);
+             uut.matcher.ai, uut.matcher.val_input);
     $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b, vocab_overflow=%b, end_addr=%b",
              uut.matcher.state, uut.matcher.equal, uut.matcher.nullptr_vocab, uut.matcher.nullptr_input, uut.matcher.vocab_overflow, uut.matcher.end_addr);
     $display("FOUND=%b, DONE=%b",
