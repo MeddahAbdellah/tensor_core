@@ -1,3 +1,4 @@
+// working
 module matcher#(
     parameter ADDR_WIDTH = 4,
     parameter WORD_LENGTH = 3,
