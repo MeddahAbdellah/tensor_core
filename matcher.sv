@@ -29,7 +29,7 @@ module matcher#(
     output logic [ADDR_WIDTH - 1: 0] addr_v,
     output logic [ADDR_WIDTH - 1: 0] addr_i,
     output logic found,
-    output logic done,
+    output logic done
 );
 
     // logic [ADDR_WIDTH- 1: 0] start_addr = 0;
