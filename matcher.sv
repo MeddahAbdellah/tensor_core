@@ -1,3 +1,18 @@
+typedef enum logic [4:0] {
+    E0,
+    E1,
+    E2,
+    E3,
+    E4,
+    E5,
+    E6,
+    E7,
+    E8,
+    NF,
+    F,
+    ERR
+} matcher_state;
+
 // working
 module matcher#(
     parameter ADDR_WIDTH = 4,
@@ -14,21 +29,6 @@ module matcher#(
     output logic [ADDR_WIDTH - 1: 0] addr_v,
     output logic [ADDR_WIDTH - 1: 0] addr_i
 );
-    typedef enum logic [4:0] {
-        E0,
-        E1,
-        E2,
-        E3,
-        E4,
-        E5,
-        E6,
-        E7,
-        E8,
-        NF,
-        F,
-        ERR,
-    } state_t;
-
 
     logic done;
     logic found;
@@ -36,7 +36,7 @@ module matcher#(
     // logic [ADDR_WIDTH- 1: 0] start_addr = 0;
     // logic [ADDR_WIDTH: 0] end_addr = 5'b10000;
 
-    state_t state;
+    matcher_state state;
     logic [ADDR_WIDTH - 1: 0] av;
     logic [ADDR_WIDTH - 1: 0] ai;
 

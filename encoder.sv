@@ -14,7 +14,7 @@ typedef enum logic [3:0] {
     E12,
     E13,
     E14,
-    E15,
+    E15
 } state_t;
 
 module encoder#(
