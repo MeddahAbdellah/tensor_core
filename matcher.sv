@@ -1,4 +1,4 @@
-typedef enum logic [4:0] {
+typedef enum logic [3:0] {
     E0,
     E1,
     E2,
@@ -85,7 +85,7 @@ module matcher#(
                         state <= E3;
                     end else if(!vo & !npv & !npi & !e) begin
                         state <= E6;
-                    end else if(vo & npv & npi & e) begin
+                    end else if(!vo & !npv & !npi & e) begin
                         state <= E2;
                     end else begin
                         state <= state;
