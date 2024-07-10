@@ -1,4 +1,5 @@
 typedef enum logic [3:0] {
+    SYNC,
     E0,
     E1,
     E2,
@@ -26,11 +27,10 @@ module matcher#(
     input logic [ADDR_WIDTH - 1: 0] vocab_end_addr,
     input logic [ADDR_WIDTH - 1: 0] input_start_addr,
     output logic [ADDR_WIDTH - 1: 0] addr_v,
-    output logic [ADDR_WIDTH - 1: 0] addr_i
+    output logic [ADDR_WIDTH - 1: 0] addr_i,
+    output logic found,
+    output logic done,
 );
-
-    logic done;
-    logic found;
 
     // logic [ADDR_WIDTH- 1: 0] start_addr = 0;
     // logic [ADDR_WIDTH: 0] end_addr = 5'b10000;
@@ -73,27 +73,35 @@ module matcher#(
                     found <= 0;
                 end
                 E1: begin
-                    av <= av;
-                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     if (vo) begin
                         state <= NF;
                     end else if (!vo & npv) begin
+                        av <= av + 1;
+                        ai <= input_start_addr;
                         state <= E5;
                     end else if(!vo & !npv & npi) begin
+                        av <= av;
+                        ai <= ai + 1;
                         state <= E3;
                     end else if(!vo & !npv & !npi & !e) begin
+                        av <= av;
+                        ai <= input_start_addr;
                         state <= E6;
                     end else if(!vo & !npv & !npi & e) begin
+                        av <= av + 1;
+                        ai <= ai + 1;
                         state <= E2;
                     end else begin
+                        av <= av;
+                        ai <= ai;
                         state <= state;
                     end
                 end
                 E2: begin
-                    av <= av + 1;
-                    ai <= ai + 1;
+                    av <= av;
+                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     state <= E1;
@@ -106,54 +114,68 @@ module matcher#(
                     state <= E4;
                 end
                 E4: begin
-                    av <= av;
-                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     if (vo & !e) begin
+                        av <= av;
+                        ai <= ai;
                         state <= NF;
                     end else if (!vo & !e) begin
+                        av <= av;
+                        ai <= input_start_addr;
                         state <= E6;
                     end else if (npv & npi & e) begin
+                        av <= av;
+                        ai <= ai;
                         state <= F;
                     end else if(!vo & (npv ^ npi) & e) begin
+                        av <= av;
+                        ai <= ai;
                         state <= ERR;
                     end else if(!vo & !npv & !npi & e) begin
+                        av <= av + 1;
+                        ai <= ai + 1;
                         state <= E8;
                     end else if(vo & !npv & !npi & e) begin
+                        av <= av;
+                        ai <= ai;
                         state <= NF;
                     end else begin
+                        av <= av;
+                        ai <= ai;
                         state <= state;
                     end
                 end
                 E5: begin
-                    av <= av + 1;
-                    ai <= input_start_addr;
+                    av <= av;
+                    ai <= av;
                     found <= 0;
                     done <= 0;
                     state <= E1;
                 end
                 E6: begin
-                    av <= av;
-                    ai <= input_start_addr;
+                    av <= av + 1;
+                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     state <= E7;
                 end
                 E7: begin
-                    av <= av;
-                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     if(!npv) begin
+                        av <= av;
+                        ai <= input_start_addr;
                         state <= E6;
                     end else begin
+                        av <= av;
+                        ai <= ai;
                         state <= E1;
                     end
                 end
                 E8: begin
-                    av <= av + 1;
-                    ai <= ai + 1;
+                    av <= av;
+                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     state <= E4;
