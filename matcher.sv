@@ -149,7 +149,7 @@ module matcher#(
                 end
                 E5: begin
                     av <= av;
-                    ai <= av;
+                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     state <= E1;
