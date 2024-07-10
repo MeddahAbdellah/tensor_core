@@ -1,5 +1,4 @@
 typedef enum logic [3:0] {
-    SYNC,
     E0,
     E1,
     E2,
@@ -92,8 +91,8 @@ module matcher#(
                         ai <= input_start_addr;
                         state <= E6;
                     end else if(!vo & !npv & !npi & e) begin
-                        av <= av + 5;
-                        ai <= ai + 5;
+                        av <= av + 1;
+                        ai <= ai + 1;
                         state <= E2;
                     end else begin
                         av <= av;
