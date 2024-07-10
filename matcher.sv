@@ -27,7 +27,7 @@ module matcher#(
         NF,
         F,
         ERR,
-    } matcher_state;
+    } state_t;
 
 
     logic done;
@@ -36,7 +36,7 @@ module matcher#(
     // logic [ADDR_WIDTH- 1: 0] start_addr = 0;
     // logic [ADDR_WIDTH: 0] end_addr = 5'b10000;
 
-    matcher_state state;
+    state_t state;
     logic [ADDR_WIDTH - 1: 0] av;
     logic [ADDR_WIDTH - 1: 0] ai;
 
