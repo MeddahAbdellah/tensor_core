@@ -55,7 +55,7 @@ module matcher#(
 
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin 
-            state <= 0;
+            state <= E0;
             av <= vocab_start_addr;
             ai <= input_start_addr;
             done <= 0;
@@ -66,7 +66,7 @@ module matcher#(
                     av <= vocab_start_addr;
                     ai <= input_start_addr;
                     if(cs) begin
-                        state <= 2'b01;
+                        state <= E1;
                     end else begin
                         state <= state;
                     end
