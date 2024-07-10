@@ -14,7 +14,6 @@ module matcher_tb;
   // Instantiate the Unit Under Test (UUT)
   matcher #(
     .ADDR_WIDTH(ADDR_WIDTH),
-    .WORD_LENGTH(WORD_LENGTH),
     .DATA_WIDTH(DATA_WIDTH)
   ) uut (
     .clk(clk),
