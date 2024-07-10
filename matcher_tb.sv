@@ -34,7 +34,7 @@ module matcher_tb;
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(matcher.addr_v)
+        .addr(uut.addr_v)
     );
 
   sram #(
@@ -45,7 +45,7 @@ module matcher_tb;
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(matcher.addr_i)
+        .addr(uut.addr_i)
     );
 
   // Clock generation

@@ -13,7 +13,6 @@ typedef enum logic [4:0] {
     ERR
 } matcher_state;
 
-// working
 module matcher#(
     parameter ADDR_WIDTH = 4,
     parameter DATA_WIDTH = 8
