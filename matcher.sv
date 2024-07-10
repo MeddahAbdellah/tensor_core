@@ -117,7 +117,7 @@ module matcher#(
                         state <= E6;
                     end else if (npv & npi & e) begin
                         state <= F;
-                    end else if(!vo & (npv xor npi) & e) begin
+                    end else if(!vo & (npv ^ npi) & e) begin
                         state <= ERR;
                     end else if(!vo & !npv & !npi & e) begin
                         state <= E8;
