@@ -173,7 +173,7 @@ module matcher#(
                     done <= 1;
                     state <= state;
                 end
-                Err: begin
+                ERR: begin
                     av <= av;
                     ai <= ai;
                     found <= 0;
