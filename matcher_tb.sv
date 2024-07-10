@@ -60,7 +60,7 @@ module matcher_tb;
     #10 rst_n = 0;
     #10 rst_n = 1;
     #10 cs = 1;
-    #300;
+    #500;
     #10 $stop;
   end
 
