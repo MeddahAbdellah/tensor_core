@@ -22,8 +22,34 @@ module matcher_tb;
     .clk(clk),
     .cs(cs),
     .rst_n(rst_n),
-    .word(word)
+    .vocab_start_addr(0),
+    .vocab_end_addr(4'b1111),
+    .input_start_addr(0),
+    .val_vocab(vocab_ram.dout),
+    .val_input(input_ram.dout)
   );
+
+  sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
+    ) vocab_ram (
+        .clk(clk),
+        .cs(1'b1),
+        .we(1'b0),
+        .addr(matcher.addr_v)
+    );
+
+  sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\word.bin")
+    ) input_ram (
+        .clk(clk),
+        .cs(1'b1),
+        .we(1'b0),
+        .addr(matcher.addr_i)
+    );
 
   // Clock generation
   always #5 clk = ~clk;
@@ -34,20 +60,10 @@ module matcher_tb;
     clk = 0;
     rst_n = 1;
     cs = 0;
-    word = {DATA_WIDTH*WORD_LENGTH{1'b0}};
-
-    // Apply reset
     #10 rst_n = 0;
     #10 rst_n = 1;
-
-    // Test case 1: Set a sample word
-    #20 word = {8'h48, 8'h65, 8'h6C}; // ASCII for "Hel"
-
     #10 cs = 1;
     #550;
-
-    $display("all mem:%p", uut.vocab_ram.mem);
-    // End simulation
     #10 $stop;
   end
 
@@ -56,11 +72,11 @@ module matcher_tb;
   always @(posedge clk) begin
     $display("rst_n:%b, cs:%b", uut.rst_n, uut.cs);
     $display("Vocab: addr=%b, val=%b",
-             uut.av, uut.vocab_ram.dout);
+             uut.av, uut.val_vocab);
     $display("Input: addr=%b, val=%b",
-             uut.ai, uut.input_ram.dout);
+             uut.ai, uut.val_input);
     $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b, vocab_overflow=%b, end_addr=%b",
-             uut.state, uut.equal, uut.nullptr_vocab, uut.nullptr_input, uut.vocab_overflow, uut.end_addr);
+             uut.state, uut.e, uut.npv, uut.npi, uut.vo, uut.vocab_end_addr);
     $display("FOUND=%b, DONE=%b",
              uut.found, uut.done);
     $display("------------------------------------------------------------------------------------------");
