@@ -4,14 +4,12 @@ module matcher_tb;
 
   // Parameters
   parameter ADDR_WIDTH = 4;
-  parameter WORD_LENGTH = 3;
   parameter DATA_WIDTH = 8;
 
   // Signals
   logic clk;
   logic rst_n;
   logic cs;
-  logic [WORD_LENGTH * DATA_WIDTH - 1 : 0] word;
 
   // Instantiate the Unit Under Test (UUT)
   matcher #(
