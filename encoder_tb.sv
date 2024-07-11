@@ -59,7 +59,7 @@ module encoder_tb;
              uut.done, uut.s);
     $display("------------------------------------------------------------------------------------------");
     if(uut.done) begin
-      $display("Mem: %s", uut.output_ram.mem);
+      $display("Mem: %p", uut.output_ram.mem);
     end
   end
 
