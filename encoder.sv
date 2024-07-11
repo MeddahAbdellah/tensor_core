@@ -173,7 +173,7 @@ module encoder#(
                         state <= E6;
                     end
                 end
-                E4: begin
+                E6: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
                     aw <= aw + 1;
