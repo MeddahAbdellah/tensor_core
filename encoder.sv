@@ -24,7 +24,7 @@ module encoder#(
     input logic clk,
     input logic cs,
     input logic rst_n,
-    output logic done,
+    output logic done
 );
     logic rs_n;
     logic ccs;
