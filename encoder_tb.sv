@@ -35,7 +35,7 @@ module encoder_tb;
     #10 rst_n = 0;
     #10 rst_n = 1;
     #10 cs = 1;
-    #1000;
+    #2000;
     #10 $stop;
   end
 
@@ -55,6 +55,8 @@ module encoder_tb;
              uut.ar, uut.aw, uut.ao, uut.w);
     $display("ai=%b, npv=%b",
              uut.ai, uut.npv);
+    $display("ENCODER DONE=%b, s=%b",
+             uut.done, uut.s);
     $display("------------------------------------------------------------------------------------------");
   end
 
