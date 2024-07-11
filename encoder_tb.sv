@@ -35,7 +35,7 @@ module encoder_tb;
     #10 rst_n = 0;
     #10 rst_n = 1;
     #10 cs = 1;
-    #550;
+    #1000;
     #10 $stop;
   end
 
@@ -43,6 +43,7 @@ module encoder_tb;
   // Monitor
   always @(posedge clk) begin
     $display("rst_n:%b, cs:%b", uut.matcher.rst_n, uut.matcher.cs);
+    $display("State:%b", uut.state);
     $display("Vocab: addr=%b, val=%b",
              uut.matcher.av, uut.matcher.val_vocab);
     $display("Input: addr=%b, val=%b",
