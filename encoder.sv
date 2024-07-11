@@ -114,75 +114,78 @@ module encoder#(
                     aw <= aw;
                     ar <= ar;
                     ao <= ao;
-                    w <= w;
+                    w <= 0;
                     state <= E2;
                 end
                 E2: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
                     aw <= aw;
+                    ar <= ar;
                     ao <= ao;
-                    w <= w;
+                    w <= 0;
                     if (matcher.done & !matcher.found) begin
-                        ar <= ar;
                         state <= E3;
                     end else begin
-                        ar <= ar;
                         state <= E2;
                     end
                 end
                 E3: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
-                    if (!npv) begin
-                        ar <= ar + 1;
-                        aw <= aw;
-                        ao <= ao;
-                        w <= w;
-                        state <= E4;
-                    end else begin
-                        ar <= ar;
-                        aw <= aw + 1;
-                        ao <= ao + 1;
-                        w <= 1;
-                        state <= E5;
-                    end
+                    ar <= ar + 1;
+                    aw <= aw;
+                    ao <= ao;
+                    w <= w;
+                    state <= E4;
                 end
                 E4: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
                     aw <= aw;
                     ao <= ao;
-                    w <= w;
                     ar <= ar;
-                    state <= E3;
+                    if (npv) begin
+                        w <= 1;
+                        state <= E5;
+                    end else begin
+                        w <= w;
+                        state <= E3;
+                    end
                 end
                 E5: begin
                     ar <= ar;
-                    if (npv) begin
-                        w <= 0;
-                        rs_n <= 0;
-                        aw <= aw;
-                        ao <= ao;
-                        ccs <= 0;
-                        state <= E1;
-                    end else begin
-                        w <= w;
-                        aw <= aw + 1;
-                        ao <= ao + 1;
-                        rs_n <= rs_n;
-                        ccs <= ccs;
-                        state <= E6;
-                    end
+                    w <= w;
+                    rs_n <= rs_n;
+                    aw <= aw + 1;
+                    ao <= ao + 1;
+                    ccs <= ccs;
+                    state <= E6;
                 end
                 E6: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
+                    ar <= ar;
+                    if (npv) begin
+                        w <= w;
+                        aw <= aw + 1;
+                        ao <= a + 1;
+                        state <= E7;
+                    end else begin
+                        w <= 1;
+                        aw <= aw;
+                        ao <= ao;
+                        state <= E5;
+                    end
+                end
+                E7: begin
+                    ar <= ar;
+                    w <= 0;
+                    rs_n <= 0;
                     aw <= aw;
                     ao <= ao;
-                    w <= w;
-                    ar <= ar;
-                    state <= E5;
+                    ccs <= 0;
+                    state <= E1;
                 end
                 default: begin
                     rs_n <= rs_n;
