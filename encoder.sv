@@ -80,6 +80,7 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b1),
+        .din(input_ram.dout),
         .addr(ao)
     );
 
