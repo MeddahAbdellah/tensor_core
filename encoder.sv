@@ -40,7 +40,7 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) matcher (
         .clk(clk),
-        .cs(cs),
+        .cs(ccs),
         .rst_n(rst_n & rs_n),
         .input_start_addr(ar),
         .vocab_start_addr(0),
