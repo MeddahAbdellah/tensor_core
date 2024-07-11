@@ -155,24 +155,25 @@ module matcher#(
                     state <= E1;
                 end
                 E6: begin
-                    av <= av + 1;
-                    ai <= ai;
                     found <= 0;
                     done <= 0;
                     state <= E7;
-                end
-                E7: begin
-                    found <= 0;
-                    done <= 0;
                     if(!npv) begin
-                        av <= av;
+                        av <= av + 1;
                         ai <= input_start_addr;
-                        state <= E6;
+                        state <= E7;
                     end else begin
                         av <= av;
                         ai <= ai;
                         state <= E1;
                     end
+                end
+                E7: begin
+                    av <= av;
+                    ai <= ai;
+                    found <= 0;
+                    done <= 0;
+                    state <= E6;
                 end
                 E8: begin
                     av <= av;
