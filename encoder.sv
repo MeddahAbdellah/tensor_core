@@ -158,7 +158,6 @@ module encoder#(
                     ao <= ao;
                     ar <= ar;
                     if (npv) begin
-                        w <= 1;
                         state <= E5;
                     end else begin
                         w <= w;
@@ -167,7 +166,7 @@ module encoder#(
                 end
                 E5: begin
                     ar <= ar;
-                    w <= w;
+                    w <= 1;
                     s <= s;
                     rs_n <= rs_n;
                     aw <= aw + 1;
@@ -182,11 +181,10 @@ module encoder#(
                     aw <= aw;
                     ao <= ao;
                     s <= s;
+                    w <= w;
                     if (npv) begin
-                        w <= w;
                         state <= E7;
                     end else begin
-                        w <= 1;
                         state <= E5;
                     end
                 end
