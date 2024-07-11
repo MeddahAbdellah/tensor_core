@@ -27,13 +27,12 @@ module encoder#(
 );
     logic rs_n;
     logic ccs;
-    logic aw;
-    logic ar;
-    logic ao;
-    logic ai;
+    logic [DATA_WIDTH - 1: 0] aw;
+    logic [DATA_WIDTH - 1: 0] ar;
+    logic [DATA_WIDTH - 1: 0] ao;
+    logic [DATA_WIDTH - 1: 0] ai;
     logic npv;
     logic w;
-    logic [DATA_WIDTH - 1: 0] buffer;
     encoder_state state;
 
     matcher #(
