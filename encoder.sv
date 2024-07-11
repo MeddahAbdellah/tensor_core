@@ -134,7 +134,7 @@ module encoder#(
                 E3: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
-                    if (npv) begin
+                    if (!npv) begin
                         ar <= ar + 1;
                         aw <= aw;
                         ao <= ao;
@@ -159,15 +159,17 @@ module encoder#(
                 end
                 E5: begin
                     ar <= ar;
-                    aw <= aw;
-                    ao <= ao;
                     if (npv) begin
                         w <= 0;
                         rs_n <= 0;
+                        aw <= aw;
+                        ao <= ao;
                         ccs <= 0;
                         state <= E1;
                     end else begin
                         w <= w;
+                        aw <= aw + 1;
+                        ao <= ao + 1;
                         rs_n <= rs_n;
                         ccs <= ccs;
                         state <= E6;
@@ -176,11 +178,11 @@ module encoder#(
                 E6: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
-                    aw <= aw + 1;
-                    ao <= ao + 1;
+                    aw <= aw;
+                    ao <= ao;
                     w <= w;
                     ar <= ar;
-                    state <= E3;
+                    state <= E5;
                 end
                 default: begin
                     rs_n <= rs_n;
