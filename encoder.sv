@@ -91,7 +91,7 @@ module encoder#(
             ccs <= 0;
             aw <= 0;
             ar <= 0;
-            a0 <= 0;
+            ao <= 0;
             w <= 0;
         end else begin
             case(state)
