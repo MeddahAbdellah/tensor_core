@@ -47,10 +47,12 @@ module encoder_tb;
              uut.matcher.av, uut.matcher.val_vocab);
     $display("Input: addr=%b, val=%b",
              uut.matcher.ai, uut.matcher.val_input);
-    $display("state=%b, equal=%b, nullptr_vocab=%b, nullptr_input=%b, vocab_overflow=%b, end_addr=%b",
-             uut.matcher.state, uut.matcher.equal, uut.matcher.nullptr_vocab, uut.matcher.nullptr_input, uut.matcher.vocab_overflow, uut.matcher.end_addr);
     $display("FOUND=%b, DONE=%b",
              uut.matcher.found, uut.matcher.done);
+    $display("ar=%b, aw=%b, ao=%b, w=%b",
+             uut.ar, uut.aw, uut.ao, uut.w);
+    $display("ai=%b, npv=%b",
+             uut.ai, uut.npv);
     $display("------------------------------------------------------------------------------------------");
   end
 

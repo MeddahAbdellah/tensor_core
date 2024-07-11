@@ -15,7 +15,7 @@ typedef enum logic [3:0] {
     E13,
     E14,
     E15
-} state_t;
+} encoder_state;
 
 module encoder#(
     parameter ADDR_WIDTH = 4,
@@ -25,13 +25,16 @@ module encoder#(
     input logic cs,
     input logic rst_n
 );
-    logic rs;
+    logic rs_n;
     logic ccs;
     logic aw;
     logic ar;
+    logic ao;
+    logic ai;
+    logic npv;
     logic w;
     logic [DATA_WIDTH - 1: 0] buffer;
-    state_t state;
+    encoder_state state;
 
     matcher #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -39,7 +42,10 @@ module encoder#(
     ) matcher (
         .clk(clk),
         .cs(cs),
-        .rst_n(rst_n),
+        .rst_n(~(rst_n & rs_n)),
+        .input_start_addr(ar),
+        .vocab_start_addr(0),
+        .vocab_end_addr(4'b1111),
         .val_vocab(vocab_ram.dout),
         .val_input(input_ram.dout)
     );
@@ -69,20 +75,20 @@ module encoder#(
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\word.bin")
-    ) phrase_ram (
+    ) output_ram (
         .clk(clk),
         .cs(1'b1),
-        .we(1'b0),
-        .addr(ar)
+        .we(1'b1),
+        .addr(ao)
     );
 
-
+    assign npv = (input_ram.dout === 0);
+    assign ai = matcher.done ? (w ? aw : ar) : matcher.addr_i;
      
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin
             state <= E0;
-            rs <= 0;
+            rs_n <= 0;
             ccs <= 0;
             aw <= 0;
             ar <= 0;
@@ -90,10 +96,11 @@ module encoder#(
         end else begin
             case(state)
                 E0: begin
-                    rs <= 0;
+                    rs_n <= 0;
                     ccs <= 0;
-                    aw <= 0;
-                    ar <= 0;
+                    aw <= aw;
+                    ar <= ar;
+                    ao <= ao;
                     w <= 0;
                     if(cs) begin
                         state <= E1;
@@ -102,24 +109,86 @@ module encoder#(
                     end
                 end
                 E1: begin
-                    rs <= 1;
-                    ccs <= css;
+                    rs_n <= 1;
+                    ccs <= 1;
                     aw <= aw;
                     ar <= ar;
+                    ao <= ao;
                     w <= w;
                     state <= E2;
                 end
                 E2: begin
-                    rs <= 1;
+                    rs_n <= rs_n;
                     ccs <= css;
                     aw <= aw;
-                    ar <= ar + 1;
+                    ao <= ao;
                     w <= w;
-                    if (input_ram.dout === 0) begin
+                    if (matcher.done & !matcher.found) begin
+                        ar <= ar + 1;
                         state <= E3;
                     end else begin
+                        ar <= ar;
                         state <= E2;
                     end
+                end
+                E3: begin
+                    rs_n <= rs_n;
+                    ccs <= css;
+                    ar <= ar;
+                    if (npv) begin
+                        aw <= aw;
+                        ao <= ao;
+                        w <= w;
+                        state <= E4;
+                    end else begin
+                        aw <= aw + 1;
+                        ao <= ao + 1;
+                        w <= 1;
+                        state <= E5;
+                    end
+                end
+                E4: begin
+                    rs_n <= rs_n;
+                    ccs <= css;
+                    aw <= aw;
+                    ao <= ao;
+                    w <= w;
+                    ar <= ar + 1;
+                    state <= E3;
+                end
+                E5: begin
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    if (npv) begin
+                        w <= 0;
+                        rs_n <= 0;
+                        ccs <= 0;
+                        state <= E1;
+                    end else begin
+                        w <= w;
+                        rs_n <= rs_n;
+                        ccs <= css;
+                        state <= E6;
+                    end
+                end
+                E4: begin
+                    rs_n <= rs_n;
+                    ccs <= css;
+                    aw <= aw + 1;
+                    ao <= ao + 1;
+                    w <= w;
+                    ar <= ar;
+                    state <= E3;
+                end
+                default: begin
+                    rs_n <= rs_n;
+                    ccs <= css;
+                    aw <= aw;
+                    ao <= ao;
+                    ar <= ar;
+                    w <= w;
+                    state <= state;
                 end
             endcase
         end
