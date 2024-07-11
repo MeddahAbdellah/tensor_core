@@ -41,7 +41,7 @@ module encoder#(
     ) matcher (
         .clk(clk),
         .cs(cs),
-        .rst_n(~(rst_n & rs_n)),
+        .rst_n(rst_n & rs_n),
         .input_start_addr(ar),
         .vocab_start_addr(0),
         .vocab_end_addr(4'b1111),
