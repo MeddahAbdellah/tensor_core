@@ -178,16 +178,13 @@ module encoder#(
                     rs_n <= rs_n;
                     ccs <= ccs;
                     ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
                     s <= s;
                     if (npv) begin
                         w <= w;
-                        aw <= aw + 1;
-                        ao <= ao + 1;
-                        state <= E7;
                     end else begin
                         w <= 1;
-                        aw <= aw;
-                        ao <= ao;
                         state <= E5;
                     end
                 end
