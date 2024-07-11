@@ -124,7 +124,7 @@ module encoder#(
                     ao <= ao;
                     w <= w;
                     if (matcher.done & !matcher.found) begin
-                        ar <= ar + 1;
+                        ar <= ar;
                         state <= E3;
                     end else begin
                         ar <= ar;
