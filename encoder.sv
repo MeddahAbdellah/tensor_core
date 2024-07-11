@@ -169,7 +169,7 @@ module encoder#(
                     if (npv) begin
                         w <= w;
                         aw <= aw + 1;
-                        ao <= a + 1;
+                        ao <= ao + 1;
                         state <= E7;
                     end else begin
                         w <= 1;
