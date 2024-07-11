@@ -183,6 +183,7 @@ module encoder#(
                     s <= s;
                     if (npv) begin
                         w <= w;
+                        state <= E7;
                     end else begin
                         w <= 1;
                         state <= E5;
