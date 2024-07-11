@@ -134,13 +134,14 @@ module encoder#(
                 E3: begin
                     rs_n <= rs_n;
                     ccs <= ccs;
-                    ar <= ar;
                     if (npv) begin
+                        ar <= ar + 1;
                         aw <= aw;
                         ao <= ao;
                         w <= w;
                         state <= E4;
                     end else begin
+                        ar <= ar;
                         aw <= aw + 1;
                         ao <= ao + 1;
                         w <= 1;
@@ -153,7 +154,7 @@ module encoder#(
                     aw <= aw;
                     ao <= ao;
                     w <= w;
-                    ar <= ar + 1;
+                    ar <= ar;
                     state <= E3;
                 end
                 E5: begin
