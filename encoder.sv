@@ -79,7 +79,7 @@ module encoder#(
     ) output_ram (
         .clk(clk),
         .cs(1'b1),
-        .we(1'b1),
+        .we(w),
         .din(input_ram.dout),
         .addr(ao)
     );
