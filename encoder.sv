@@ -241,7 +241,7 @@ module encoder#(
                     ao <= ao;
                     ccs <= ccs;
                     state <= state;
-                    dont <= 1;
+                    done <= 1;
                 end
                 default: begin
                     rs_n <= rs_n;
