@@ -158,6 +158,7 @@ module encoder#(
                     ao <= ao;
                     ar <= ar;
                     if (npv) begin
+                        w <= 1;
                         state <= E5;
                     end else begin
                         w <= w;
@@ -169,34 +170,34 @@ module encoder#(
                     w <= 1;
                     s <= s;
                     rs_n <= rs_n;
-                    aw <= aw + 1;
-                    ao <= ao + 1;
+                    aw <= aw;
+                    ao <= ao;
                     ccs <= ccs;
                     state <= E6;
                 end
                 E6: begin
-                    rs_n <= rs_n;
-                    ccs <= ccs;
                     ar <= ar;
-                    aw <= aw;
-                    ao <= ao;
+                    w <= 1;
                     s <= s;
-                    w <= w;
-                    if (npv) begin
-                        state <= E7;
-                    end else begin
-                        state <= E5;
-                    end
+                    rs_n <= rs_n;
+                    aw <= aw + 1;
+                    ao <= ao + 1;
+                    ccs <= ccs;
+                    state <= E7;
                 end
                 E7: begin
                     ar <= ar;
-                    w <= 0;
-                    rs_n <= 0;
+                    w <= w;
+                    rs_n <= rs_n;
                     s <= s;
                     aw <= aw;
                     ao <= ao;
-                    ccs <= 0;
-                    state <= E8;
+                    ccs <= ccs;
+                    if (npv) begin 
+                        state <= E8;
+                    end else begin
+                        state <= E6;
+                    end
                 end
                 E8: begin
                     w <= 0;
