@@ -19,6 +19,9 @@ typedef enum logic [4:0] {
     E17,
     E18,
     E19,
+    E20,
+    E21,
+    E22,
     DONE
 } encoder_state;
 
