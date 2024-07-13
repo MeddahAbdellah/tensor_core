@@ -80,7 +80,8 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(ow),
-        .addr(ai)
+        .addr(ai),
+        .din(output_ram.dout)
     );
 
     sram #(
