@@ -270,7 +270,7 @@ module encoder#(
                     ccs <= ccs;
                     done <= done;
                     if (npv) begin
-                        state <= E12
+                        state <= E12;
                     end else begin
                         state <= E10;
                     end
@@ -296,7 +296,7 @@ module encoder#(
                     ccs <= ccs;
                     done <= done;
                     if (npv) begin
-                        state <= E14
+                        state <= E14;
                     end else begin
                         state <= E12;
                     end
