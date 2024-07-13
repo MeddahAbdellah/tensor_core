@@ -1,4 +1,4 @@
-typedef enum logic [3:0] {
+typedef enum logic [4:0] {
     E0,
     E1,
     E2,
@@ -14,6 +14,11 @@ typedef enum logic [3:0] {
     E12,
     E13,
     E14,
+    E15,
+    E16,
+    E17,
+    E18,
+    E19,
     DONE
 } encoder_state;
 
@@ -135,6 +140,9 @@ module encoder#(
                     if (matcher.done & !matcher.found) begin
                         s <= 1;
                         state <= E3;
+                    end else if (matcher.done & matcher.found) begin
+                        s <= 0;
+                        state <= E10;
                     end else begin
                         s <= s;
                         state <= E2;
@@ -240,6 +248,132 @@ module encoder#(
                     ccs <= ccs;
                     state <= state;
                     done <= 1;
+                end
+                E10: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar + 1;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    state <= E11;
+                    done <= done;
+                end
+                E11: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    done <= done;
+                    if (npv) begin
+                        state <= E12
+                    end else begin
+                        state <= E10;
+                    end
+                end
+                E12: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar + 1;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    state <= E13;
+                    done <= done;
+                end
+                E13: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    done <= done;
+                    if (npv) begin
+                        state <= E14
+                    end else begin
+                        state <= E12;
+                    end
+                end
+                E14: begin
+                    w <= 1;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    state <= E15;
+                    done <= done;
+                end
+                E15: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw + 1;
+                    ao <= ao + 1;
+                    ccs <= ccs;
+                    state <= E16;
+                    done <= done;
+                end
+                E16: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ccs <= ccs;
+                    done <= done;
+                    if (npv) begin
+                        ao <= ao - 1;
+                        state <= E17;
+                    end else begin
+                        ao <= ao;
+                        state <= E15;
+                    end
+                end
+                E17: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    ccs <= ccs;
+                    done <= done;
+                    state <= E18;
+                end
+                E18: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw + 1;
+                    ao <= ao + 1;
+                    ccs <= ccs;
+                    state <= E19;
+                    done <= done;
+                end
+                E19: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ccs <= ccs;
+                    done <= done;
+                    if (npv) begin
+                        state <= E8;
+                    end else begin
+                        state <= E18;
+                    end
                 end
                 default: begin
                     rs_n <= rs_n;
