@@ -20,7 +20,7 @@ module sram #(
             $readmemb(INIT_FILE, mem);
         end else begin
             for (int i = 0; i < 2**ADDR_WIDTH; i++) begin
-                mem[i] = '0;
+                mem[i] = 1'b1;
             end
         end
     end
