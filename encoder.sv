@@ -212,15 +212,14 @@ module encoder#(
                     rs_n <= 0;
                     s <= s;
                     ccs <= 0;
+                    ao <= ao;
                     if(npv) begin
                         ar <= 0;
                         aw <= 0;
-                        ao <= 0;
                         state <= E9;
                     end else begin
                         ar <= ar;
                         aw <= aw;
-                        ao <= ao;
                         state <= E1;
                     end
                 end
