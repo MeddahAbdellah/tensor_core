@@ -35,7 +35,7 @@ module encoder_tb;
     #10 rst_n = 0;
     #10 rst_n = 1;
     #10 cs = 1;
-    #3000;
+    #4000;
     #10 $stop;
   end
 
