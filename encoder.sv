@@ -139,7 +139,7 @@ module encoder#(
                     ao <= ao_current_char;
                     ac <= ac + 1;
                     state <= E4;
-                end if(!e & !npv) begin
+                end else if(!e & !npv) begin
                     ao <= ao_current_char;
                     ac <= ac;
                     state <= E8;
