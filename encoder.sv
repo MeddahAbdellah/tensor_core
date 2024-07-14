@@ -9,6 +9,7 @@ typedef enum logic [3:0] {
     E7,
     E8,
     E9,
+    E10,
     DONE
 } encoder_state;
 
@@ -27,6 +28,7 @@ module encoder#(
     logic [ADDR_WIDTH - 1: 0] ac;
     logic [ADDR_WIDTH - 1: 0] ao_current_char;
     logic [ADDR_WIDTH - 1: 0] a_output_code;
+    logic flatten;
 
 
     grouper #(
@@ -71,7 +73,7 @@ module encoder#(
         .cs(1'b1),
         .we(1'b1),
         .addr(a_output_code),
-        .din(code_ram.dout)
+        .din(flatten ? 0 : code_ram.dout)
     );
 
     sram #(
@@ -110,6 +112,7 @@ module encoder#(
             ao_current_char <= 0;
             a_output_code <= 0;
             done <= 0;
+            flatten <= 0;
         end else begin
         case(state)
             E0: begin
@@ -163,7 +166,8 @@ module encoder#(
             E6: begin
                 if(npo) begin
                     done <= 1;
-                    state <= DONE;
+                    flatten <= 1;
+                    state <= E10;
                 end else begin
                     ac <= 0;
                     av <= 0;
@@ -185,6 +189,9 @@ module encoder#(
                     ac <= ac;
                     state <= E8;
                 end
+            end
+            E10: begin
+                state <= DONE;
             end
             DONE: begin
                 done <= 1;
