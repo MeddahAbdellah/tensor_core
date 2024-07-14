@@ -42,27 +42,6 @@ module encoder_tb;
 
   // Monitor
   always @(posedge clk) begin
-    $display("rst_n:%b, cs:%b", uut.matcher.rst_n, uut.matcher.cs);
-    $display("SRAM Vocab: addr=%b, val=%b",
-             uut.vocab_ram.addr, uut.vocab_ram.dout);
-    $display("SRAM Input: addr=%b, val=%b, ow=%b",
-             uut.input_ram.addr, uut.input_ram.dout, uut.input_ram.we);
-    $display("Encoder State:%b", uut.state);
-    $display("Matcher State:%b", uut.matcher.state);
-    $display("Matcher Vocab: addr=%b, val=%b",
-             uut.matcher.av, uut.matcher.val_vocab);
-    $display("Matcher Input: addr=%b, val=%b",
-             uut.matcher.ai, uut.matcher.val_input);
-    $display("FOUND=%b, DONE=%b",
-             uut.matcher.found, uut.matcher.done);
-    $display("ar=%b, aw=%b, ao=%b, w=%b",
-             uut.ar, uut.aw, uut.ao, uut.w);
-    $display("ai=%b, npv=%b",
-             uut.ai, uut.npv);
-    $display("ENCODER DONE=%b, s=%b",
-             uut.done, uut.s);
-    $display("Input Mem: %p", uut.input_ram.mem);
-    $display("Output Mem: %p", uut.output_ram.mem);
     $display("------------------------------------------------------------------------------------------");
   end
 
