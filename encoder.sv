@@ -142,7 +142,7 @@ module encoder#(
                     state <= E2;
                 end else begin
                     ao_current_char <= ao;
-                    ac <= ac;
+                    ac <= 0;
                     state <= E5;
                 end
             end
