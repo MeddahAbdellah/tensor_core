@@ -67,7 +67,8 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b1),
-        .addr(a_output_code)
+        .addr(a_output_code),
+        .din(code_ram.dout)
     );
 
     sram #(
