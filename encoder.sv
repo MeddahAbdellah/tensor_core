@@ -29,6 +29,16 @@ module encoder#(
         .we(1'b0),
         .addr(grouper.matcher.addr_v)
     );
+    sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
+    ) code_ram (
+        .clk(clk),
+        .cs(1'b1),
+        .we(1'b0),
+        .addr(grouper.matcher.addr_v)
+    );
 
     sram #(
         .DATA_WIDTH(DATA_WIDTH),

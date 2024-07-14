@@ -37,15 +37,15 @@ module grouper#(
     input logic [DATA_WIDTH - 1: 0] val_input,
     input logic [DATA_WIDTH - 1: 0] val_output,
     output logic ow,
-    output logic [DATA_WIDTH - 1: 0] ai,
-    output logic [DATA_WIDTH - 1: 0] ao,
+    output logic [ADDR_WIDTH - 1: 0] ai,
+    output logic [ADDR_WIDTH - 1: 0] ao,
     output logic w,
     output logic done
 );
     logic rs_n;
     logic ccs;
-    logic [DATA_WIDTH - 1: 0] aw;
-    logic [DATA_WIDTH - 1: 0] ar;
+    logic [ADDR_WIDTH - 1: 0] aw;
+    logic [ADDR_WIDTH - 1: 0] ar;
     logic npv;
     logic npo;
     logic s;
@@ -223,9 +223,11 @@ module grouper#(
                     ccs <= ccs;
                     if(s) begin
                         ow <= ow;
+                        done <= 1;
                         state <= DONE;
                     end else begin
                         ow <= 1;
+                        done <= 0;
                         state <= E20;
                     end
                 end
