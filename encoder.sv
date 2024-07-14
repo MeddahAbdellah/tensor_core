@@ -87,7 +87,6 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) output_ram (
         .clk(clk),
-        .rst_n(rst_n),
         .cs(1'b1),
         .we(grouper.w),
         .din(input_ram.dout),
