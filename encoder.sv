@@ -288,20 +288,24 @@ module encoder#(
                     rs_n <= rs_n;
                     ccs <= ccs;
                     s <= s;
-                    ar <= ar;
-                    aw <= aw;
-                    ao <= ao;
+
                     if(npo) begin
                         w <= 0;
                         rs_n <= 0;
                         ccs <= 0;
                         ow <= 0;
+                        ar <= 0;
+                        aw <= 0;
+                        ao <= 0;
                         state <= E1;
                     end else begin
                         w <= w;
                         ow <= ow;
                         rs_n <= rs_n;
                         ccs <= ccs;
+                        ar <= ar;
+                        aw <= aw;
+                        ao <= ao;
                         state <= E21;
                     end
                 end
