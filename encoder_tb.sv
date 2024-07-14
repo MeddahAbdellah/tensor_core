@@ -48,7 +48,7 @@ module encoder_tb;
     $display("a_ouptut_code=%b", uut.a_ouptut_code);
     $display("Input Mem: %p", uut.input_ram.mem);
     $display("Output Mem: %p", uut.output_ram.mem);
-    $display("Output code Mem: %p", uut.output_ram.mem);
+    $display("Output code Mem: %p", uut.output_code_ram.mem);
     $display("------------------------------------------------------------------------------------------");
   end
 
