@@ -165,11 +165,12 @@ module encoder#(
                     done <= 1;
                     state <= DONE;
                 end else begin
+                    ac <= 0;
+                    av <= 0;
                     state <= E7;
                 end
             end
             E7: begin
-                ac <= 0;
                 state <= E2;
             end
             E8: begin
