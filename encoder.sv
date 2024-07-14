@@ -1,3 +1,14 @@
+typedef enum logic [3:0] {
+    E0,
+    E1,
+    E2,
+    E3,
+    E4,
+    E5,
+    E6,
+    DONE
+} encoder_state;
+
 module encoder#(
     parameter ADDR_WIDTH = 4,
     parameter DATA_WIDTH = 8
@@ -7,7 +18,15 @@ module encoder#(
     input logic rst_n,
     output logic done
 );
-      grouper #(
+    encoder_state state;
+    logic [ADDR_WIDTH - 1: 0] av;
+    logic [ADDR_WIDTH - 1: 0] ao;
+    logic [ADDR_WIDTH - 1: 0] ac;
+    logic [ADDR_WIDTH - 1: 0] ao_current_char;
+    logic [ADDR_WIDTH - 1: 0] a_ouptut_code;
+
+
+    grouper #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
       ) grouper (
@@ -27,8 +46,9 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(grouper.matcher.addr_v)
+        .addr(grouper.done ? av : grouper.matcher.addr_v)
     );
+
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
@@ -37,7 +57,18 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(grouper.matcher.addr_v)
+        .addr(ac)
+    );
+
+    sram #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH),
+    ) output_code_ram (
+        .clk(clk),
+        .rst_n(rst_n)
+        .cs(1'b1),
+        .we(1'b1),
+        .addr(a_ouptut_code)
     );
 
     sram #(
@@ -57,9 +88,88 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) output_ram (
         .clk(clk),
+        .rst_n(rst_n)
         .cs(1'b1),
         .we(grouper.w),
         .din(input_ram.dout),
-        .addr(grouper.ao)
+        .addr(grouper.done ? ao : grouper.ao)
     );
+
+    assign e = vocab_ram.dout === output_ram.dout;
+    assign npv = vocab_ram.dout === 0;
+    assign npo = output_ram.dout === 0;
+
+    always_ff @(posedge clk or negedge rst_n) begin
+        if(!rst_n) begin
+            state <= E0;
+            done <= 0;
+        end else begin
+        case(state)
+            E0: begin
+                if(cs) begin
+                    state <= E1;
+                end else begin
+                    state <= state;
+                end
+            end
+            E1: begin
+                if(matcher.done) begin
+                    state <= E2;
+                end else begin
+                    state <= state;
+                end
+            end
+            E2: begin
+                av <= av + 1;
+                ao <= ao + 1;
+                ac <= ac;
+                ao_current_char <= ao_current_char;
+                a_ouptut_code <= a_ouptut_code;
+                state <= E3;
+            end
+            E3: begin
+                if(!e) begin
+                    ao <= ao_current_char;
+                    ac <= ac + 1;
+                    state <= E4;
+                end else if(e & !npv & !npo) begin
+                    ao <= ao;
+                    ac <= ac;
+                    state <= E2;
+                end else begin
+                    ao_current_char <= ao;
+                    ac <= ac;
+                    state <= E5;
+                end
+            end
+            E4: begin
+                state <= E2;
+            end
+            E5: begin
+                state <= E6;
+            end
+            E6: begin
+                if(npo) begin
+                    done <= 1;
+                    state <= DONE;
+                end else begin
+                    state <= E2;
+                end
+            end
+            DONE: begin
+                done <= 1;
+                state <= state;
+            end
+            default: begin
+                av <= av;
+                ao <= ao;
+                ac <= ac;
+                ao_current_char <= ao_current_char;
+                a_ouptut_code <= a_ouptut_code;
+                done <= done;
+                state <= state;
+            end
+        endcase
+        end
+    end
 endmodule
