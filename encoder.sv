@@ -23,7 +23,7 @@ module encoder#(
     logic [ADDR_WIDTH - 1: 0] ao;
     logic [ADDR_WIDTH - 1: 0] ac;
     logic [ADDR_WIDTH - 1: 0] ao_current_char;
-    logic [ADDR_WIDTH - 1: 0] a_ouptut_code;
+    logic [ADDR_WIDTH - 1: 0] a_output_code;
 
 
     grouper #(
@@ -65,10 +65,10 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH),
     ) output_code_ram (
         .clk(clk),
-        .rst_n(rst_n)
+        .rst_n(rst_n),
         .cs(1'b1),
         .we(1'b1),
-        .addr(a_ouptut_code)
+        .addr(a_output_code)
     );
 
     sram #(
@@ -88,7 +88,7 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) output_ram (
         .clk(clk),
-        .rst_n(rst_n)
+        .rst_n(rst_n),
         .cs(1'b1),
         .we(grouper.w),
         .din(input_ram.dout),
@@ -124,7 +124,7 @@ module encoder#(
                 ao <= ao + 1;
                 ac <= ac;
                 ao_current_char <= ao_current_char;
-                a_ouptut_code <= a_ouptut_code;
+                a_output_code <= a_output_code;
                 state <= E3;
             end
             E3: begin
@@ -165,7 +165,7 @@ module encoder#(
                 ao <= ao;
                 ac <= ac;
                 ao_current_char <= ao_current_char;
-                a_ouptut_code <= a_ouptut_code;
+                a_output_code <= a_output_code;
                 done <= done;
                 state <= state;
             end

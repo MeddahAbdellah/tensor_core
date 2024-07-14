@@ -45,7 +45,7 @@ module encoder_tb;
     $display("Encoder State:%b", uut.state);
     $display("av=%b, ao=%b", uut.av, uut.ao);
     $display("ac=%b, ao_current_char=%b", uut.ac, uut.ao_current_char);
-    $display("a_ouptut_code=%b", uut.a_ouptut_code);
+    $display("a_output_code=%b", uut.a_output_code);
     $display("Input Mem: %p", uut.input_ram.mem);
     $display("Output Mem: %p", uut.output_ram.mem);
     $display("Output code Mem: %p", uut.output_code_ram.mem);
