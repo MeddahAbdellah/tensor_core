@@ -7,6 +7,8 @@ typedef enum logic [3:0] {
     E5,
     E6,
     E7,
+    E8,
+    E9,
     DONE
 } encoder_state;
 
@@ -133,10 +135,14 @@ module encoder#(
                 state <= E3;
             end
             E3: begin
-                if(!e) begin
+                if(!e & npv) begin
                     ao <= ao_current_char;
                     ac <= ac + 1;
                     state <= E4;
+                end if(!e & !npv) begin
+                    ao <= ao_current_char;
+                    ac <= ac;
+                    state <= E8;
                 end else if(e & !npv & !npo) begin
                     ao <= ao;
                     ac <= ac;
@@ -165,6 +171,19 @@ module encoder#(
             E7: begin
                 ac <= 0;
                 state <= E2;
+            end
+            E8: begin
+                av <= av + 1;
+                state <= E9;
+            end
+            E9: begin
+                if(npv) begin
+                    ac <= ac + 1;
+                    state <= E4;
+                end else begin
+                    ac <= ac;
+                    state <= E8;
+                end
             end
             DONE: begin
                 done <= 1;
