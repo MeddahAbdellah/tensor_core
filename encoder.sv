@@ -27,7 +27,7 @@ module encoder#(
         .clk(clk),
         .cs(1'b1),
         .we(1'b0),
-        .addr(matcher.addr_v)
+        .addr(grouper.matcher.addr_v)
     );
 
     sram #(
