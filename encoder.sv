@@ -62,7 +62,7 @@ module encoder#(
 
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH)
     ) output_code_ram (
         .clk(clk),
         .rst_n(rst_n),
