@@ -45,8 +45,8 @@ module encoder_tb;
     $display("rst_n:%b, cs:%b", uut.matcher.rst_n, uut.matcher.cs);
     $display("SRAM Vocab: addr=%b, val=%b",
              uut.vocab_ram.addr, uut.vocab_ram.dout);
-    $display("SRAM Input: addr=%b, val=%b",
-             uut.input_ram.addr, uut.input_ram.dout);
+    $display("SRAM Input: addr=%b, val=%b, ow=%b",
+             uut.input_ram.addr, uut.input_ram.dout, uut.input_ram.we);
     $display("Encoder State:%b", uut.state);
     $display("Matcher State:%b", uut.matcher.state);
     $display("Matcher Vocab: addr=%b, val=%b",
