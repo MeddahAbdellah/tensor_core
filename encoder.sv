@@ -13,10 +13,10 @@ module encoder#(
       ) grouper (
         .clk(clk),
         .cs(cs),
-        .rst_n(rst_n)
+        .rst_n(rst_n),
         .val_output(output_ram.dout),
         .val_input(input_ram.dout),
-        .val_vocab(vocab_ram.dout),
+        .val_vocab(vocab_ram.dout)
     );
 
     sram #(
