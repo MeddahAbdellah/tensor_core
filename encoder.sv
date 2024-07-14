@@ -150,6 +150,7 @@ module encoder#(
                 state <= E2;
             end
             E5: begin
+                a_output_code <= a_output_code + 1;
                 state <= E6;
             end
             E6: begin
