@@ -291,14 +291,15 @@ module encoder#(
                     ar <= ar;
                     aw <= aw;
                     ao <= ao;
-                    ow <= ow;
                     if(npo) begin
                         w <= 0;
                         rs_n <= 0;
                         ccs <= 0;
+                        ow <= 0;
                         state <= E1;
                     end else begin
                         w <= w;
+                        ow <= ow;
                         rs_n <= rs_n;
                         ccs <= ccs;
                         state <= E21;
