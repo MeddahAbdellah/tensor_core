@@ -238,7 +238,7 @@ module encoder#(
                         ar <= ar;
                         aw <= aw;
                         ao <= ao;
-                        state <= E1;
+                        state <= E20;
                     end
                 end
                 E9: begin
