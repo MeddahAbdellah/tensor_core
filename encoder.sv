@@ -52,7 +52,7 @@ module encoder#(
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
+        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\code.bin")
     ) code_ram (
         .clk(clk),
         .cs(1'b1),
