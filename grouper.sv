@@ -33,19 +33,22 @@ module grouper#(
     input logic clk,
     input logic cs,
     input logic rst_n,
+    input logic [DATA_WIDTH - 1: 0] val_vocab,
+    input logic [DATA_WIDTH - 1: 0] val_input,
+    input logic [DATA_WIDTH - 1: 0] val_output,
+    output logic ow,
+    output logic [DATA_WIDTH - 1: 0] ai,
+    output logic [DATA_WIDTH - 1: 0] ao,
+    output logic w,
     output logic done
 );
     logic rs_n;
     logic ccs;
     logic [DATA_WIDTH - 1: 0] aw;
     logic [DATA_WIDTH - 1: 0] ar;
-    logic [DATA_WIDTH - 1: 0] ao;
-    logic [DATA_WIDTH - 1: 0] ai;
     logic npv;
     logic npo;
-    logic w;
     logic s;
-    logic ow;
     grouper_state state;
 
     matcher #(
@@ -58,46 +61,14 @@ module grouper#(
         .input_start_addr(ar),
         .vocab_start_addr(0),
         .vocab_end_addr(4'b1111),
-        .val_vocab(vocab_ram.dout),
-        .val_input(input_ram.dout)
+        .val_vocab(val_vocab),
+        .val_input(val_input)
     );
 
-    sram #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
-    ) vocab_ram (
-        .clk(clk),
-        .cs(1'b1),
-        .we(1'b0),
-        .addr(matcher.addr_v)
-    );
 
-    sram #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
-        .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\word.bin")
-    ) input_ram (
-        .clk(clk),
-        .cs(1'b1),
-        .we(ow),
-        .addr(ai),
-        .din(output_ram.dout)
-    );
 
-    sram #(
-        .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH)
-    ) output_ram (
-        .clk(clk),
-        .cs(1'b1),
-        .we(w),
-        .din(input_ram.dout),
-        .addr(ao)
-    );
-
-    assign npv = (input_ram.dout === 0);
-    assign npo = (output_ram.dout === 0);
+    assign npv = (val_input === 0);
+    assign npo = (val_output === 0);
     assign ai = matcher.done ? (w ? aw : ar) : matcher.addr_i;
      
     always_ff @(posedge clk or negedge rst_n) begin

@@ -42,6 +42,8 @@ module encoder_tb;
 
   // Monitor
   always @(posedge clk) begin
+    $display("Input Mem: %p", uut.input_ram.mem);
+    $display("Output Mem: %p", uut.output_ram.mem);
     $display("------------------------------------------------------------------------------------------");
   end
 
