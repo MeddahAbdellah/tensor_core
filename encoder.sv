@@ -455,12 +455,13 @@ module encoder#(
                     s <= s;
                     ar <= ar;
                     aw <= aw;
-                    ow <= ow;
                     ccs <= ccs;
                     done <= done;
                     if (npv) begin
+                        ow <= 0;
                         state <= E8;
                     end else begin
+                        ow <= ow;
                         state <= E18;
                     end
                 end
