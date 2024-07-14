@@ -100,6 +100,11 @@ module encoder#(
     always_ff @(posedge clk or negedge rst_n) begin
         if(!rst_n) begin
             state <= E0;
+            av <= 0;
+            ao <= 0;
+            ac <= 0;
+            ao_current_char <= 0;
+            a_output_code <= 0;
             done <= 0;
         end else begin
         case(state)
