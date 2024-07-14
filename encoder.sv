@@ -15,6 +15,7 @@ typedef enum logic [4:0] {
     E13,
     E14,
     E15,
+    E15_PATCH,
     E16,
     E17,
     E18,
@@ -384,6 +385,18 @@ module encoder#(
                     done <= done;
                 end
                 E15: begin
+                    w <= w;
+                    rs_n <= rs_n;
+                    s <= s;
+                    ar <= ar;
+                    aw <= aw;
+                    ao <= ao;
+                    ow <= ow;
+                    ccs <= ccs;
+                    state <= E15_PATCH;
+                    done <= done;
+                end
+                E15_PATCH: begin
                     w <= w;
                     rs_n <= rs_n;
                     s <= s;
