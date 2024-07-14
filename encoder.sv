@@ -111,7 +111,7 @@ module encoder#(
                 end
             end
             E1: begin
-                if(matcher.done) begin
+                if(grouper.done) begin
                     state <= E2;
                 end else begin
                     state <= state;
