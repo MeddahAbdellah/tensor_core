@@ -65,7 +65,6 @@ module encoder#(
         .ADDR_WIDTH(ADDR_WIDTH)
     ) output_code_ram (
         .clk(clk),
-        .rst_n(rst_n),
         .cs(1'b1),
         .we(1'b1),
         .addr(a_output_code)
