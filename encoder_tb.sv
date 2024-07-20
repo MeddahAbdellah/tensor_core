@@ -43,6 +43,7 @@ module encoder_tb;
   // Monitor
   always @(posedge clk) begin
     $display("Encoder State:%b", uut.state);
+    $display("Grouper State:%b", uut.grouper.state);
     $display("av=%b, ao=%b", uut.av, uut.ao);
     $display("ac=%b, ao_current_char=%b", uut.ac, uut.ao_current_char);
     $display("a_output_code=%b", uut.a_output_code);
