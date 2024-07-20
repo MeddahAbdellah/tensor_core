@@ -121,7 +121,7 @@ module grouper#(
                     ow <= 0;
                     w <= 0;
                     if (matcher.done & !matcher.found) begin
-                        s <= 1;
+                        s <= s;
                         state <= E3;
                     end else if (matcher.done & matcher.found) begin
                         s <= 0;
