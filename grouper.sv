@@ -108,7 +108,7 @@ module grouper#(
                     ar <= ar;
                     ao <= ao;
                     w <= 0;
-                    s <= 1;
+                    s <= s;
                     ow <= 0;
                     state <= E2;
                 end
@@ -260,7 +260,6 @@ module grouper#(
                     w <= w;
                     rs_n <= rs_n;
                     ccs <= ccs;
-                    s <= s;
 
                     if(npo) begin
                         w <= 0;
@@ -270,8 +269,10 @@ module grouper#(
                         ar <= 0;
                         aw <= 0;
                         ao <= 0;
+                        s <= 1;
                         state <= E1;
                     end else begin
+                        s <= s;
                         w <= w;
                         ow <= ow;
                         rs_n <= rs_n;
