@@ -4,6 +4,7 @@ module encoder_tb;
 
   // Parameters
   parameter ADDR_WIDTH = 4;
+  parameter VOCAB_ADDR_WIDTH = 5;
   parameter DATA_WIDTH = 8;
 
   // Signals
@@ -14,6 +15,7 @@ module encoder_tb;
   // Instantiate the Unit Under Test (UUT)
   encoder #(
     .ADDR_WIDTH(ADDR_WIDTH),
+    .VOCAB_ADDR_WIDTH(ADDR_WIDTH),
     .DATA_WIDTH(DATA_WIDTH)
   ) uut (
     .clk(clk),

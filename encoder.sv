@@ -15,6 +15,7 @@ typedef enum logic [3:0] {
 
 module encoder#(
     parameter ADDR_WIDTH = 4,
+    parameter VOCAB_ADDR_WIDTH = 4,
     parameter DATA_WIDTH = 8
 ) (
     input logic clk,
@@ -23,9 +24,9 @@ module encoder#(
     output logic done
 );
     encoder_state state;
-    logic [ADDR_WIDTH - 1: 0] av;
+    logic [VOCAB_ADDR_WIDTH - 1: 0] av;
     logic [ADDR_WIDTH - 1: 0] ao;
-    logic [ADDR_WIDTH - 1: 0] ac;
+    logic [VOCAB_ADDR_WIDTH - 1: 0] ac;
     logic [ADDR_WIDTH - 1: 0] ao_current_char;
     logic [ADDR_WIDTH - 1: 0] a_output_code;
     logic flatten;
@@ -33,6 +34,7 @@ module encoder#(
 
     grouper #(
         .ADDR_WIDTH(ADDR_WIDTH),
+        .VOCAB_ADDR_WIDTH(VOCAB_ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH)
       ) grouper (
         .clk(clk),
@@ -45,7 +47,7 @@ module encoder#(
 
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
+        .ADDR_WIDTH(VOCAB_ADDR_WIDTH),
         .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\vocab.bin")
     ) vocab_ram (
         .clk(clk),
@@ -56,7 +58,7 @@ module encoder#(
 
     sram #(
         .DATA_WIDTH(DATA_WIDTH),
-        .ADDR_WIDTH(ADDR_WIDTH),
+        .ADDR_WIDTH(VOCAB_ADDR_WIDTH),
         .INIT_FILE("C:\\Users\\abdal\\verilog_work\\tensor_core\\codes.bin")
     ) code_ram (
         .clk(clk),

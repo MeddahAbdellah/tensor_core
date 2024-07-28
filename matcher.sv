@@ -15,6 +15,7 @@ typedef enum logic [3:0] {
 
 module matcher#(
     parameter ADDR_WIDTH = 4,
+    parameter VOCAB_ADDR_WIDTH = 4,
     parameter DATA_WIDTH = 8
 )(
     input logic clk,
@@ -22,10 +23,10 @@ module matcher#(
     input logic cs,
     input logic [DATA_WIDTH - 1: 0] val_vocab,
     input logic [DATA_WIDTH - 1: 0] val_input,
-    input logic [ADDR_WIDTH - 1: 0] vocab_start_addr,
-    input logic [ADDR_WIDTH - 1: 0] vocab_end_addr,
+    input logic [VOCAB_ADDR_WIDTH - 1: 0] vocab_start_addr,
+    input logic [VOCAB_ADDR_WIDTH - 1: 0] vocab_end_addr,
     input logic [ADDR_WIDTH - 1: 0] input_start_addr,
-    output logic [ADDR_WIDTH - 1: 0] addr_v,
+    output logic [VOCAB_ADDR_WIDTH - 1: 0] addr_v,
     output logic [ADDR_WIDTH - 1: 0] addr_i,
     output logic found,
     output logic done
@@ -35,7 +36,7 @@ module matcher#(
     // logic [ADDR_WIDTH: 0] end_addr = 5'b10000;
 
     matcher_state state;
-    logic [ADDR_WIDTH - 1: 0] av;
+    logic [VOCAB_ADDR_WIDTH - 1: 0] av;
     logic [ADDR_WIDTH - 1: 0] ai;
 
     logic vo;

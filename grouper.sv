@@ -28,6 +28,7 @@ typedef enum logic [4:0] {
 
 module grouper#(
     parameter ADDR_WIDTH = 4,
+    parameter VOCAB_ADDR_WIDTH = 4,
     parameter DATA_WIDTH = 8
 ) (
     input logic clk,
@@ -53,6 +54,7 @@ module grouper#(
 
     matcher #(
         .DATA_WIDTH(DATA_WIDTH),
+        .VOCAB_ADDR_WIDTH(VOCAB_ADDR_WIDTH),
         .ADDR_WIDTH(ADDR_WIDTH)
     ) matcher (
         .clk(clk),
