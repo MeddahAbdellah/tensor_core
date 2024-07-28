@@ -11,6 +11,7 @@ module encoder_tb;
   logic clk;
   logic rst_n;
   logic cs;
+  integer clk_cycle_count;
 
   // Instantiate the Unit Under Test (UUT)
   encoder #(
@@ -48,6 +49,7 @@ module encoder_tb;
   // Monitor
   always @(posedge clk) begin
     if(uut.done == 0) begin
+        clk_cycle_count = clk_cycle_count + 1;
         $display("Encoder State:%b", uut.state);
         $display("Grouper State:%b", uut.grouper.state);
         $display("Grouper OW:%b", uut.grouper.ow);
