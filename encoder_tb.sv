@@ -15,7 +15,7 @@ module encoder_tb;
   // Instantiate the Unit Under Test (UUT)
   encoder #(
     .ADDR_WIDTH(ADDR_WIDTH),
-    .VOCAB_ADDR_WIDTH(ADDR_WIDTH),
+    .VOCAB_ADDR_WIDTH(VOCAB_ADDR_WIDTH),
     .DATA_WIDTH(DATA_WIDTH)
   ) uut (
     .clk(clk),
