@@ -167,7 +167,6 @@ module encoder#(
             end
             E6: begin
                 if(npo) begin
-                    done <= 1;
                     flatten <= 1;
                     state <= E10;
                 end else begin

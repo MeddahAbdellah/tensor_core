@@ -33,6 +33,7 @@ module encoder_tb;
     clk = 0;
     rst_n = 1;
     cs = 0;
+    clk_cycle_count = 0;
 
     // Apply reset
     #10 rst_n = 0;
