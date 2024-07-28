@@ -37,24 +37,29 @@ module encoder_tb;
     #10 rst_n = 0;
     #10 rst_n = 1;
     #10 cs = 1;
-    #6000;
-    #10 $stop;
+    // Wait for done signal
+    wait (uut.done == 1);
+    #10;
+    $display("Number of clock cycles: %0d", clk_cycle_count);
+    $stop;
   end
 
 
   // Monitor
   always @(posedge clk) begin
-    $display("Encoder State:%b", uut.state);
-    $display("Grouper State:%b", uut.grouper.state);
-    $display("Grouper OW:%b", uut.grouper.ow);
-    $display("av=%b, ao=%b", uut.av, uut.ao);
-    $display("ac=%b, ao_current_char=%b", uut.ac, uut.ao_current_char);
-    $display("a_output_code=%b", uut.a_output_code);
-    $display("e=%b, npo=%b, npv=%b", uut.e, uut.npo, uut.npv);
-    $display("Input Mem: %p", uut.input_ram.mem);
-    $display("Output Mem: %p", uut.output_ram.mem);
-    $display("Output code Mem: %p", uut.output_code_ram.mem);
-    $display("------------------------------------------------------------------------------------------");
+    if(uut.done == 0) begin
+        $display("Encoder State:%b", uut.state);
+        $display("Grouper State:%b", uut.grouper.state);
+        $display("Grouper OW:%b", uut.grouper.ow);
+        $display("av=%b, ao=%b", uut.av, uut.ao);
+        $display("ac=%b, ao_current_char=%b", uut.ac, uut.ao_current_char);
+        $display("a_output_code=%b", uut.a_output_code);
+        $display("e=%b, npo=%b, npv=%b", uut.e, uut.npo, uut.npv);
+        $display("Input Mem: %p", uut.input_ram.mem);
+        $display("Output Mem: %p", uut.output_ram.mem);
+        $display("Output code Mem: %p", uut.output_code_ram.mem);
+        $display("------------------------------------------------------------------------------------------");
+    end
   end
 
 endmodule
