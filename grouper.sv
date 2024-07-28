@@ -62,7 +62,7 @@ module grouper#(
         .rst_n(rst_n & rs_n),
         .input_start_addr(ar),
         .vocab_start_addr(0),
-        .vocab_end_addr(4'b1111),
+        .vocab_end_addr(5'b11111),
         .val_vocab(val_vocab),
         .val_input(val_input)
     );
